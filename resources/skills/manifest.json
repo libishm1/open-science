@@ -144,6 +144,12 @@
       "updatedAt": "2026-08-26T00:00:00.000Z"
     },
     {
+      "id": "aec-research-workflow",
+      "name": "AEC Research Workflow",
+      "source": "featured",
+      "updatedAt": "2026-10-22T00:00:00.000Z"
+    },
+    {
       "id": "self-awareness",
       "name": "Self-awareness",
       "source": "featured",

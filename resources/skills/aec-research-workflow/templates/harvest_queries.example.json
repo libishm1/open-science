@@ -1,0 +1,19 @@
+{
+ "_comment": "Example queries for scripts/harvest_openalex.py. Replace the blocks and queries with your own; {NAME} inside a query is replaced by blocks.NAME. cap = maximum records retrieved per query (by relevance). Each query is searched in titles and abstracts.",
+ "date_from": "2021-01-01",
+ "date_to": "2026-12-31",
+ "types": "article|review",
+ "default_cap": 600,
+ "blocks": {
+  "BUILDING": "(building OR buildings OR construction OR \"built environment\")",
+  "TIMBER": "(\"mass timber\" OR \"cross-laminated timber\" OR CLT OR \"glued laminated timber\" OR glulam)"
+ },
+ "queries": {
+  "Q01_timber_embodied_carbon": "{TIMBER} AND (\"embodied carbon\" OR \"life cycle assessment\" OR LCA OR \"global warming potential\")",
+  "Q02_digital_twin_operation": {
+   "query": "(\"digital twin\" OR BIM OR \"building information modelling\" OR \"building information modeling\") AND (\"facility management\" OR operation OR maintenance) AND {BUILDING}",
+   "cap": 400
+  },
+  "Q03_site_computer_vision": "(\"computer vision\" OR \"deep learning\" OR \"object detection\") AND (\"construction site\" OR \"construction progress\" OR \"construction safety\")"
+ }
+}
