@@ -2,6 +2,7 @@
 name: computational-design
 description: Use this skill for any question about computational design, parametric modeling (Grasshopper, Dynamo, sliders, data trees, GH definition, teaching Grasshopper, student errors), generative design (evolutionary algorithms, Galapagos, Octopus, Wallacei, NSGA-II, fitness functions), GraphML for AEC (graph neural networks, GNN, heterogeneous graphs, IFC as graph, message passing, node classification, link prediction, GraphML, GML, DGCNN, graph machine learning, Bridge to GNN, Categories A-D, PRISMA systematic review AEC), Topologic (TopologicPy, IFC cell complex, spatial topology, fire egress, shortest path, face adjacency, CellComplex), algorithmic patterns (tessellation, L-systems, Voronoi, Penrose, Islamic geometry), structural computation (Karamba3D, Kangaroo, form-finding, FEA, topology optimization), environmental simulation in hot-arid climate (Ladybug, Honeybee, solar, daylight, EnergyPlus, Riyadh, Gulf, ASHRAE), facade computation (panelization, rationalization, curtain wall, kinetic facades), digital fabrication (CNC, 3D printing, laser cutting), BIM scripting (Revit API, pyRevit, IFC, IfcOpenShell), interoperability (Speckle, Rhino.Inside, IFC pipelines), scripting (GhPython, RhinoCommon, C# Grasshopper, pyRevit), optimization, data-driven design, mesh processing, design automation, ML for AEC (GNN, GANs, CV, SAM, GroundedSAM, LLM task planning).
 license: see repository LICENSE
+compatibility: Claude, Codex, local models, Ubuntu with ROS 2, Herdr and Omarchy. Rhino and Grasshopper steps need Windows or macOS (or a remote Rhino host); Python, IFC and scripting steps run on all platforms.
 ---
 
 # Computational Design Skills for AEC
@@ -755,3 +756,9 @@ class BuildingOpt(Problem):
 ---
 
 *Base: Amanbh997/Claude-skills-for-Computational-Designers (MIT). Extended for GraphML, Topologic, Grasshopper teaching, hot-arid climate and robotic fabrication. Examples use Riyadh climate data as a sample hot-arid site.*
+
+## Platforms and orchestrators
+
+This skill runs on Claude, Codex, local models, Herdr and Omarchy. Read
+`references/platform-compatibility.md` for which steps need which operating system, how to
+name paths, and how to give each agent pane its inputs.

@@ -2,6 +2,7 @@
 name: ai-debugging
 description: Debugging procedure for AI coding agents working in native and managed code. Routes to three detailed playbooks - C and C++ (gdb, lldb, cdb, WinDbg, sanitizers, memory corruption, ABI and link errors), C# and .NET (Visual Studio, Rider, dotnet-dump, SOS, GC and async issues, assembly binding, bitness mismatches), and RhinoCommon and Grasshopper plugins (plugin load, components missing, geometry validity, threading, GH solve hangs). Use when a crash, exception, hang, wrong result or load failure needs reproducing and isolating, or when an agent must debug in a live debugger session.
 license: see repository LICENSE
+compatibility: Claude, Codex, local models, Ubuntu with ROS 2, Herdr and Omarchy. Use cdb or WinDbg on Windows, gdb or lldb on Linux and macOS. RhinoCommon steps need Windows or macOS.
 ---
 
 # AI-assisted debugging
@@ -64,3 +65,9 @@ symptom, then the C# reference for the runtime question.
 - Hypotheses tested, with result for each.
 - Root cause, fix, and proof.
 - Open risks and what would confirm them.
+
+## Platforms and orchestrators
+
+This skill runs on Claude, Codex, local models, Herdr and Omarchy. Read
+`references/platform-compatibility.md` for which steps need which operating system, how to
+name paths, and how to give each agent pane its inputs.

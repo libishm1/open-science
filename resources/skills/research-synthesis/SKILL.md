@@ -2,6 +2,7 @@
 name: research-synthesis
 description: Method for running a literature review and a cross-disciplinary synthesis that is reproducible and counted. Three tiers - PRISMA 2020 for the counted funnel and corpus statistics, a per-algorithm extraction card for derived math and code seams, and ROSES-style narrative synthesis across disciplines with an evidence map, compatibility matrix and verdicts. Includes a gap-analysis procedure (unstudied combinations, unmeasured parameters, unvalidated methods, cross-domain transfer gaps) and the counting and honesty rules that keep the output defensible to reviewers. Use for literature reviews, state-of-the-art surveys, systematic or scoping reviews, gap analysis before a paper, and any "what is known, what is missing" question across fields.
 license: see repository LICENSE
+compatibility: Claude, Codex, local models, Ubuntu with ROS 2, Herdr and Omarchy. Method only; scripts need Python 3.10 or later and run on all platforms.
 ---
 
 # Research synthesis: counted, traceable, cross-disciplinary
@@ -143,3 +144,9 @@ show it.
   and drop the ones a single study would not move.
 - **Search drift.** Changing the strands after seeing results. Keep the
   protocol and log any change as a dated amendment.
+
+## Platforms and orchestrators
+
+This skill runs on Claude, Codex, local models, Herdr and Omarchy. Read
+`references/platform-compatibility.md` for which steps need which operating system, how to
+name paths, and how to give each agent pane its inputs.
