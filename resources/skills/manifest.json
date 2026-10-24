@@ -170,6 +170,24 @@
       "activationPolicy": "always-on",
       "exposure": "internal",
       "updatedAt": "2026-08-09T00:00:00.000Z"
+    },
+    {
+      "id": "computational-design",
+      "name": "Computational Design",
+      "source": "featured",
+      "updatedAt": "2026-10-24T00:00:00.000Z"
+    },
+    {
+      "id": "ai-debugging",
+      "name": "AI Debugging",
+      "source": "featured",
+      "updatedAt": "2026-10-24T00:00:00.000Z"
+    },
+    {
+      "id": "research-synthesis",
+      "name": "Research Synthesis",
+      "source": "featured",
+      "updatedAt": "2026-10-24T00:00:00.000Z"
     }
   ]
 }
