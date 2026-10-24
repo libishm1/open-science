@@ -276,3 +276,22 @@ Apply this to any `Tooltip` + `DropdownMenuTrigger` (or `DialogTrigger`) combo. 
 alternatives: `onCloseAutoFocus={(e) => e.preventDefault()}` breaks focus return for keyboard/screen
 reader users, and fully controlled `open` state is more code for the same behavior. Reference
 implementation: `ConversationPanel.tsx` (composer "+" and split-send triggers, commit `b363657fd`, PR #798).
+
+## Agent skills (bundled, fork additions)
+
+These skills ship in `resources/skills/` and follow the same folder format as the other bundled skills.
+Agents outside this app (Claude Code, Codex, local models) can read them directly.
+
+| Skill | Use it for |
+|---|---|
+| `computational-design` | Grasshopper and parametric modelling, GraphML for AEC, Topologic and IFC, simulation, fabrication |
+| `ai-debugging` | Debugging native and managed code, including RhinoCommon and Grasshopper plugins |
+| `research-synthesis` | Literature reviews, PRISMA 2020 counts, extraction cards, ROSES-style synthesis, gap analysis |
+
+Rules for these skill files (also apply to any agent editing them):
+
+1. Keep the frontmatter `name` equal to the folder name, with a `description` that says when to use the skill.
+2. Write procedures, checklists and templates. Do not add results or conclusions about a field.
+3. No personal paths, personal names, client names, contact details or credentials.
+4. Link every referenced file with backtick paths such as `references/x.md`.
+5. Register a new bundled skill in `resources/skills/manifest.json`.
