@@ -1,5 +1,14 @@
 # Platform compatibility (Claude, Codex, local agents, Herdr, Omarchy)
 
+## Contents
+
+- Line 6: Where each step runs
+- Line 19: Agent hosts
+- Line 29: Herdr (terminal workspace manager for coding agents)
+- Line 50: Ubuntu and ROS 2 (robotics)
+- Line 73: Omarchy (Arch Linux with Hyprland)
+- Line 81: Versions
+
 Read this with the skill's `SKILL.md`. It states where each step runs. It does not promise that
 a tool works on your machine. Check the versions you install.
 

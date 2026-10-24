@@ -10,6 +10,19 @@ invocation: /structural-computation
 
 # Structural Computation
 
+## Contents
+
+- Line 13: 1. Computational Structural Design Philosophy
+- Line 42: 2. Finite Element Analysis Fundamentals
+- Line 141: 3. Form-Finding Methods
+- Line 221: 4. Shell Structures
+- Line 317: 5. Gridshell Structures
+- Line 393: 6. Topology Optimization
+- Line 516: 7. Material-Aware Computation
+- Line 575: 8. Structural Computation Tools
+- Line 654: 9. Worked Examples
+- Line 690: References and Further Reading
+
 ## 1. Computational Structural Design Philosophy
 
 ### The Unity of Form and Force

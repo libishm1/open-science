@@ -10,6 +10,66 @@ invocation: /digital-fabrication
 
 # Digital Fabrication in AEC
 
+## Contents
+
+- Line 13: File-to-Factory Paradigm
+- Line 71: Machine Types
+- Line 88: Workpiece Materials
+- Line 105: Tool Types
+- Line 115: Milling Strategies
+- Line 134: Speed and Feed Calculation
+- Line 160: Surface Finish
+- Line 173: Workholding
+- Line 182: 5-Axis Considerations
+- Line 193: Industrial Robots for AEC
+- Line 226: End Effectors
+- Line 235: Programming Approaches
+- Line 266: Coordinate Systems
+- Line 274: Motion Types
+- Line 281: Singularity Avoidance
+- Line 294: Safety
+- Line 303: AEC Applications
+- Line 317: Polymer AM
+- Line 338: Concrete AM
+- Line 355: Metal AM
+- Line 361: Design for AM
+- Line 378: Print Parameters
+- Line 397: Scale Categories
+- Line 403: Post-Processing
+- Line 415: Materials and Capabilities
+- Line 430: Design Rules
+- Line 439: Nesting
+- Line 446: File Preparation
+- Line 454: Laser Types
+- Line 464: CNC Timber Joints
+- Line 485: Multi-Axis Timber Processing Machines
+- Line 492: CLT Fabrication
+- Line 504: Glulam CNC
+- Line 512: Timber Plate Structures
+- Line 521: Design for CNC Timber
+- Line 534: Conventional Formwork
+- Line 540: CNC-Milled Formwork
+- Line 562: 3D-Printed Formwork
+- Line 568: Flexible Formwork
+- Line 582: Robotic Shotcrete on Mesh
+- Line 590: Slip Forming
+- Line 598: Cost Comparison
+- Line 615: Assembly Sequencing
+- Line 627: Connection Design
+- Line 640: Transport Constraints
+- Line 655: Lifting and Crane Selection
+- Line 667: Element Numbering and Marking
+- Line 674: Assembly Tolerance Management
+- Line 681: QA/QC Procedures
+- Line 689: Digital Twin for Assembly Tracking
+- Line 700: G-Code Structure
+- Line 736: RAPID (ABB Robot Language) Basics
+- Line 776: KRL (KUKA Robot Language) Basics
+- Line 813: URScript (Universal Robots) Basics
+- Line 845: Post-Processor Concept
+- Line 864: File Formats by Machine Type
+- Line 879: Pre-Flight Checklist
+
 ## File-to-Factory Paradigm
 
 Digital fabrication represents the direct translation of computational design models into physically realized building components through numerically controlled manufacturing processes. The file-to-factory paradigm eliminates the interpretive gap between designer intent and fabricator execution. Every geometric decision encoded in the digital model propagates deterministically into machine instructions, material removal paths, or deposition trajectories.

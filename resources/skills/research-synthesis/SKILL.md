@@ -7,6 +7,15 @@ compatibility: Claude, Codex, local models, Ubuntu with ROS 2, Herdr and Omarchy
 
 # Research synthesis: counted, traceable, cross-disciplinary
 
+## Quick start (for small local models)
+
+1. Write the research question and the search terms in one list. Save it as `protocol.md` (template in `templates/protocol.md`).
+2. Run the search. Record the count after each step.
+3. Make one extraction card per included source (template in `templates/extraction-card.md`).
+4. Count the reasons for each exclusion. Fill `templates/prisma-flow.md`.
+5. Write the synthesis using `templates/roses-synthesis.md`. Every number must come from a count.
+6. Run the gap procedure in `references/gap-analysis.md`. Keep only gaps with a stated search scope.
+
 This skill is a procedure. It contains no conclusions about any field.
 Fill it with your own sources, counts and verdicts. Every claim the output
 makes must trace to a source, a count, or a derivation.
@@ -132,21 +141,7 @@ show it.
 - `templates/roses-synthesis.md` - cross-disciplinary synthesis template.
 - `templates/protocol.md` - protocol to commit before searching.
 
-## Failure modes
 
-- **Counts without a denominator.** A count with no screened base cannot be
-  checked. Always show the funnel.
-- **Narrative masquerading as comparison.** A table that ranks methods on
-  different metrics. Move it to T2 or name the shared metric.
-- **Copied math.** An equation pasted from a PDF with a typo that propagates.
-  Derive it or check it against the source definition.
-- **Gap inflation.** Listing every unstudied combination as a gap. Rank them
-  and drop the ones a single study would not move.
-- **Search drift.** Changing the strands after seeing results. Keep the
-  protocol and log any change as a dated amendment.
+## Files and failure modes
 
-## Platforms and orchestrators
-
-This skill runs on Claude, Codex, local models, Herdr and Omarchy. Read
-`references/platform-compatibility.md` for which steps need which operating system, how to
-name paths, and how to give each agent pane its inputs.
+- `references/failure-modes.md` - common failures and how to avoid them.

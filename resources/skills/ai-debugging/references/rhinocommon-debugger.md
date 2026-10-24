@@ -5,6 +5,18 @@ description: This skill should be used when the user is debugging a Rhino or Gra
 
 # RhinoCommon Debugger
 
+## Contents
+
+- Line 10: When to use
+- Line 26: When NOT to use
+- Line 33: Sourcing current docs (Context7 + official primary sources)
+- Line 65: Tool ladder
+- Line 80: Workflow
+- Line 136: Common bug patterns
+- Line 350: reference plugin StonePack-specific cheat references
+- Line 359: Quick decision tree
+- Line 398: Verification flags
+
 Procedural guide for debugging Rhino plugins (`.rhp`) and Grasshopper assemblies (`.gha`) built against McNeel's RhinoCommon .NET API. Targets the reference plugin StonePack project's reality: .NET Framework 4.8 today, Rhino 7 + Rhino 8 installed, Visual Studio on Windows. This skill covers only what is specific to RhinoCommon. For general .NET / C# debugger workflow, exception triage, GC, async, assembly binding, and `<Private>` semantics, defer to the `csharp-debugger` skill.
 
 ## When to use

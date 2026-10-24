@@ -5,6 +5,21 @@ description: This skill should be used when the user is debugging C or C++ code 
 
 # C++ Debugger
 
+## Contents
+
+- Line 10: When to use
+- Line 22: When NOT to use
+- Line 29: Sourcing current docs (Context7 + official primary sources)
+- Line 62: Workflow
+- Line 170: gdb / lldb cheatsheet
+- Line 236: WinDbg / cdb cheatsheet
+- Line 287: Common bug patterns
+- Line 396: Linker error triage
+- Line 417: Template error spam
+- Line 427: Quick decision tree
+- Line 449: Reverse / time-travel debugging
+- Line 456: Working with native interop / P/Invoke
+
 Procedural guide for debugging C and C++ programs across Windows, Linux, and macOS. Optimized for native interop work (P/Invoke targets, COM, Rhino C++ SDK plugins, etc.).
 
 ## When to use

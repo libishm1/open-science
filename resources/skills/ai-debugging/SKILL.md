@@ -7,6 +7,15 @@ compatibility: Claude, Codex, local models, Ubuntu with ROS 2, Herdr and Omarchy
 
 # AI-assisted debugging
 
+## Quick start (for small local models)
+
+1. Write the symptom in one sentence, with the exact error text.
+2. Find the matching reference in the routing table above. Read only that file.
+3. Open the file's `## Contents` list. Pick one section. Read only that section with `Read`, using `offset` and `limit`.
+4. Make the smallest test that reproduces the symptom. Save its output to a file.
+5. Form one hypothesis. Test it. Record the result.
+6. Fix one thing. Re-run the test. Stop when it passes.
+
 Use this skill to run a debugging session with an agent. It sets the shared
 procedure. The three references hold the platform detail.
 

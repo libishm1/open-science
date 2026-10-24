@@ -1,5 +1,15 @@
 # Python / Rhino Complete Reference
 
+## Contents
+
+- Line 3: rhinoscriptsyntax API Reference
+- Line 337: RhinoCommon Class Hierarchy
+- Line 389: Geometry Creation Recipes
+- Line 730: GhPython Data Tree Manipulation Patterns
+- Line 807: Performance Optimization for Python in Rhino/GH
+- Line 854: External Library Integration
+- Line 938: File I/O Patterns
+
 ## rhinoscriptsyntax API Reference
 
 ### Point and Vector Operations
