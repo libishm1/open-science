@@ -1,0 +1,66 @@
+{
+  "owned": [
+    "academic-paper-composer",
+    "academic-paper-strategist",
+    "aec-research-workflow",
+    "ai-debugging",
+    "computational-design",
+    "conversation-handoff",
+    "latex-document",
+    "lean-verification",
+    "local-model-setup",
+    "molecular-figure-design",
+    "pdf-to-markdown",
+    "research-synthesis",
+    "rhino-gh-components",
+    "rhino-gh-presentation-checks",
+    "rhino-mcp-setup",
+    "robotics-ros2-ur",
+    "tamil-translator"
+  ],
+  "sources": [
+    {
+      "name": "computational-design-skill",
+      "repo": "https://github.com/libishm1/computational-design-skill.git",
+      "ref": "rhino-ros-skills",
+      "commit": "7364dbc6d829288cb92cc6fffed586762beeefe3"
+    },
+    {
+      "name": "open-science",
+      "repo": "https://github.com/libishm1/open-science.git",
+      "ref": "feat/local-agent-skills",
+      "commit": "b5cad88676ba40ff2a193a4f011e616b9c822bfc"
+    }
+  ],
+  "skills": [
+    "academic-paper-composer",
+    "academic-paper-strategist",
+    "aec-research-workflow",
+    "ai-debugging",
+    "computational-design",
+    "conversation-handoff",
+    "latex-document",
+    "lean-verification",
+    "local-model-setup",
+    "molecular-figure-design",
+    "pdf-to-markdown",
+    "research-synthesis",
+    "rhino-gh-components",
+    "rhino-gh-presentation-checks",
+    "rhino-mcp-setup",
+    "robotics-ros2-ur",
+    "tamil-translator"
+  ],
+  "local_additions": {
+    "skills": [
+      "pdf-to-markdown",
+      "academic-paper-composer",
+      "academic-paper-strategist",
+      "tamil-translator",
+      "lean-verification",
+      "latex-document",
+      "local-model-setup"
+    ],
+    "note": "Added 2026-10-25 from local staging; not yet in a public skill repository commit."
+  }
+}

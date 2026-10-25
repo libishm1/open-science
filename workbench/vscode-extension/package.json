@@ -1,0 +1,78 @@
+{
+  "name": "local-agent-workbench",
+  "displayName": "Local Agent Workbench",
+  "description": "Runs the offline local agent workbench commands from VS Code.",
+  "version": "0.2.0",
+  "publisher": "local",
+  "license": "MIT",
+  "engines": {
+    "vscode": "^1.80.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "main": "./extension.js",
+  "activationEvents": [],
+  "contributes": {
+    "commands": [
+      {
+        "command": "lawb.doctor",
+        "title": "LAWB: Doctor (check setup)"
+      },
+      {
+        "command": "lawb.setup",
+        "title": "LAWB: Setup (bundled skills)"
+      },
+      {
+        "command": "lawb.skillsList",
+        "title": "LAWB: List skills"
+      },
+      {
+        "command": "lawb.pdfExtract",
+        "title": "LAWB: Extract text from the active PDF"
+      },
+      {
+        "command": "lawb.diagramBuild",
+        "title": "LAWB: Build diagram from the active JSON spec"
+      },
+      {
+        "command": "lawb.prismaCounts",
+        "title": "LAWB: PRISMA counts from the active CSV"
+      },
+      {
+        "command": "lawb.loopRun",
+        "title": "LAWB: Run error loop on the active project folder"
+      }
+    ],
+    "configuration": {
+      "title": "Local Agent Workbench",
+      "properties": {
+        "lawb.repoPath": {
+          "type": "string",
+          "default": "",
+          "description": "Folder that contains the workbench (the folder with src/lawb). Required."
+        },
+        "lawb.pythonPath": {
+          "type": "string",
+          "default": "python",
+          "description": "Python interpreter that has the workbench dependencies."
+        },
+        "lawb.model": {
+          "type": "string",
+          "default": "qwen2.5-coder:7b",
+          "description": "Model used by the error loop. Use a local model name, or provider:model if cloud is enabled."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "test": "node --test test/cli.test.js test/challenge.test.js test/extension.test.js"
+  },
+  "files": [
+    "extension.js",
+    "lib/",
+    "README.md",
+    "LICENSE",
+    "package.json"
+  ]
+}

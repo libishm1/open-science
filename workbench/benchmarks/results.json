@@ -1,0 +1,218 @@
+[
+  {
+    "bench": "B1",
+    "check": "identified_total",
+    "status": "PASS",
+    "detail": "expected 11 got 11"
+  },
+  {
+    "bench": "B1",
+    "check": "identified_per_strand",
+    "status": "PASS",
+    "detail": "expected {'strand_a': 3, 'strand_b': 5, 'strand_c': 3} got {'strand_a': 3, 'strand_b': 5, 'strand_c': 3}"
+  },
+  {
+    "bench": "B1",
+    "check": "duplicates_removed",
+    "status": "PASS",
+    "detail": "expected 2 got 2"
+  },
+  {
+    "bench": "B1",
+    "check": "title_abstract_screened",
+    "status": "PASS",
+    "detail": "expected 6 got 6"
+  },
+  {
+    "bench": "B1",
+    "check": "title_abstract_excluded",
+    "status": "PASS",
+    "detail": "expected {'off-topic': 2, 'no method': 1} got {'off-topic': 2, 'no method': 1}"
+  },
+  {
+    "bench": "B1",
+    "check": "full_text_assessed",
+    "status": "PASS",
+    "detail": "expected 3 got 3"
+  },
+  {
+    "bench": "B1",
+    "check": "full_text_excluded",
+    "status": "PASS",
+    "detail": "expected {'no data': 2} got {'no data': 2}"
+  },
+  {
+    "bench": "B1",
+    "check": "included",
+    "status": "PASS",
+    "detail": "expected 1 got 1"
+  },
+  {
+    "bench": "B1",
+    "check": "included_by_year",
+    "status": "PASS",
+    "detail": "expected {'2021': 1} got {'2021': 1}"
+  },
+  {
+    "bench": "B1",
+    "check": "included_by_type",
+    "status": "PASS",
+    "detail": "expected {'book': 1} got {'book': 1}"
+  },
+  {
+    "bench": "B1",
+    "check": "funnel consistency",
+    "status": "PASS",
+    "detail": "advanced 3, assessed 3"
+  },
+  {
+    "bench": "B2",
+    "check": "pipeline structure",
+    "status": "PASS",
+    "detail": "nodes 3/3, edges 2/2"
+  },
+  {
+    "bench": "B2",
+    "check": "prisma_flow structure",
+    "status": "PASS",
+    "detail": "nodes 3/3, edges 2/2"
+  },
+  {
+    "bench": "B2",
+    "check": "decision structure",
+    "status": "PASS",
+    "detail": "nodes 3/3, edges 2/2"
+  },
+  {
+    "bench": "B2",
+    "check": "unknown node rejected",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "bench": "B3",
+    "check": "pipeline parses",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "bench": "B3",
+    "check": "prisma_flow parses",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "bench": "B3",
+    "check": "decision parses",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "bench": "B4",
+    "check": "pdf recall",
+    "status": "PASS",
+    "detail": "5/5 phrases; engine pymupdf"
+  },
+  {
+    "bench": "B4",
+    "check": "page markers",
+    "status": "PASS",
+    "detail": "expected 3, got 3"
+  },
+  {
+    "bench": "B5",
+    "check": "qwen2.5-coder:1.5b",
+    "status": "FAIL",
+    "detail": "fixed=False rounds=4 t=14.2s"
+  },
+  {
+    "bench": "B5",
+    "check": "qwen2.5-coder:7b",
+    "status": "PASS",
+    "detail": "fixed=True rounds=4 t=47.4s"
+  },
+  {
+    "bench": "B5",
+    "check": "qwen3:8b",
+    "status": "PASS",
+    "detail": "fixed=True rounds=4 t=47.8s"
+  },
+  {
+    "bench": "B7",
+    "check": "claude live reply",
+    "status": "NOT VERIFIED",
+    "detail": "ANTHROPIC_API_KEY is not set"
+  },
+  {
+    "bench": "B7",
+    "check": "openai live reply",
+    "status": "NOT VERIFIED",
+    "detail": "set LAWB_OPENAI_MODEL to a model id on your account"
+  },
+  {
+    "bench": "B6",
+    "check": "pipeline or workflow diagram",
+    "status": "SUPPORTED",
+    "detail": "kind=flowchart"
+  },
+  {
+    "bench": "B6",
+    "check": "PRISMA flow diagram",
+    "status": "SUPPORTED",
+    "detail": "kind=flowchart"
+  },
+  {
+    "bench": "B6",
+    "check": "decision tree",
+    "status": "SUPPORTED",
+    "detail": "kind=flowchart"
+  },
+  {
+    "bench": "B6",
+    "check": "system architecture box diagram",
+    "status": "SUPPORTED",
+    "detail": "kind=flowchart"
+  },
+  {
+    "bench": "B6",
+    "check": "bar or line chart from data",
+    "status": "NOT SUPPORTED",
+    "detail": "kind=plot"
+  },
+  {
+    "bench": "B6",
+    "check": "scatter plot with error bars",
+    "status": "NOT SUPPORTED",
+    "detail": "kind=plot"
+  },
+  {
+    "bench": "B6",
+    "check": "multi-panel publication figure with shared axes",
+    "status": "NOT SUPPORTED",
+    "detail": "kind=plot"
+  },
+  {
+    "bench": "B6",
+    "check": "scientific schematic with custom artwork",
+    "status": "NOT SUPPORTED",
+    "detail": "kind=illustration"
+  },
+  {
+    "bench": "B6",
+    "check": "molecular or cell illustration",
+    "status": "NOT SUPPORTED",
+    "detail": "kind=illustration"
+  },
+  {
+    "bench": "B6",
+    "check": "brand-styled template export",
+    "status": "NOT SUPPORTED",
+    "detail": "kind=template"
+  },
+  {
+    "bench": "B6",
+    "check": "coverage",
+    "status": "INFO",
+    "detail": "4/10 figure types produced by the workbench"
+  }
+]

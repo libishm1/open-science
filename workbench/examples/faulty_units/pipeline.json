@@ -1,0 +1,15 @@
+{
+  "steps": [
+    {"name": "compile", "cmd": ["python", "-m", "py_compile", "units.py", "stats.py", "stones.py", "rounding.py"]},
+    {"name": "tests", "cmd": ["python", "-m", "unittest", "test_all", "-v"]}
+  ],
+  "modules": ["units.py", "stats.py", "stones.py", "rounding.py"],
+  "routing": {
+    "test_units": "units.py",
+    "test_mean": "stats.py",
+    "test_mean_empty": "stats.py",
+    "test_range_inclusive": "stones.py",
+    "test_gap": "rounding.py"
+  },
+  "max_rounds": 4
+}

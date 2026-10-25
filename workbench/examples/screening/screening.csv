@@ -1,0 +1,12 @@
+record_id,strand,year,type,duplicate,stage,decision,reason
+R1,strand_a,2019,journal,no,title_abstract,include,
+R2,strand_a,2020,journal,no,title_abstract,exclude,off-topic
+R3,strand_a,2021,book,no,title_abstract,include,
+R3,strand_b,2021,book,yes,title_abstract,include,
+R4,strand_b,2022,preprint,no,title_abstract,exclude,no method
+R5,strand_b,2022,journal,no,title_abstract,include,
+R1,strand_b,2019,journal,yes,title_abstract,include,
+R1x,strand_b,2023,journal,no,title_abstract,exclude,off-topic
+R1,strand_c,2019,journal,no,full_text,exclude,no data
+R3,strand_c,2021,book,no,full_text,include,
+R5,strand_c,2022,journal,no,full_text,exclude,no data

@@ -1,0 +1,15 @@
+{
+  "title": "Review pipeline",
+  "direction": "TD",
+  "nodes": {
+    "search": "Search strands",
+    "screen": "Title and abstract screening",
+    "full": "Full-text assessment",
+    "incl": "Included"
+  },
+  "edges": [
+    ["search", "screen", "records"],
+    ["screen", "full", "eligible"],
+    ["full", "incl", "meets criteria"]
+  ]
+}

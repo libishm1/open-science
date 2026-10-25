@@ -12,7 +12,8 @@ compatibility: Claude, Codex, local models, Ubuntu with ROS 2, Herdr and Omarchy
 1. Write the research question and the search terms in one list. Save it as `protocol.md` (template in `templates/protocol.md`).
 2. Run the search. Record the count after each step.
 3. Make one extraction card per included source (template in `templates/extraction-card.md`).
-4. Count the reasons for each exclusion. Fill `templates/prisma-flow.md`.
+4. Count the reasons for each exclusion. With a screening CSV, run
+   `python scripts/prisma_flow.py <screening.csv> --out-dir prisma_output` for the counts and the flow diagram (`flow.svg`).
 5. Write the synthesis using `templates/roses-synthesis.md`. Every number must come from a count.
 6. Run the gap procedure in `references/gap-analysis.md`. Keep only gaps with a stated search scope.
 
@@ -137,6 +138,7 @@ show it.
 
 - `references/gap-analysis.md` - full gap procedure and ranking rubric.
 - `templates/prisma-flow.md` - counted flow and corpus statistics template.
+- `scripts/prisma_flow.py` - counts and a PRISMA flow diagram (SVG and Mermaid) from a screening CSV; standard library only.
 - `templates/extraction-card.md` - per-method card schema.
 - `templates/roses-synthesis.md` - cross-disciplinary synthesis template.
 - `templates/protocol.md` - protocol to commit before searching.

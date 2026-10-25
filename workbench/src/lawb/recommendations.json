@@ -1,0 +1,29 @@
+{
+  "measured_on": "Windows 11, Intel i9-9880H, 64 GB RAM, NVIDIA Quadro RTX 4000 (8 GB), Ollama, 2026-10-25",
+  "note": "Small exact-answer benchmarks (6 math, 3 coding, 3 literature tasks) plus a multi-step error-fixing loop and a skill-following test. A starting point, not a ranking: re-run benchmarks/task_models.py on your own machine.",
+  "tasks": {
+    "coding": {
+      "model": "qwen2.5-coder:7b",
+      "small": ["qwen2.5-coder:1.5b"],
+      "why": "3/3 coding tasks, and fixed all four seeded faults in the multi-step error loop. The 1.5B model passes single functions but failed the multi-step loop."
+    },
+    "math": {
+      "model": "qwen3:14b",
+      "small": ["qwen2.5-coder:7b"],
+      "why": "6/6 math problems, but about three times slower. qwen2.5-coder:7b scored 5/6 and qwen3:8b scored 4/6."
+    },
+    "literature": {
+      "model": "qwen3:8b",
+      "small": ["qwen2.5-coder:1.5b"],
+      "why": "3/3 on extraction, screening and refusing to invent a reference; 7/7 when following skills. qwen2.5-coder:7b scored 2/3."
+    },
+    "general": {
+      "model": "qwen3:8b",
+      "small": ["qwen2.5-coder:1.5b"],
+      "why": "Followed the skills in 7/7 tasks. The 1.5B model followed 5/7 and is the choice for computers with 8 GB of RAM."
+    }
+  },
+  "not_recommended": {
+    "gpt-oss:20b": "The locally downloaded copy did not load in this Ollama version (GGUF metadata error). Re-download it before testing."
+  }
+}

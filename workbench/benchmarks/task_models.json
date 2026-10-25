@@ -1,0 +1,71 @@
+[
+  {
+    "model": "qwen2.5-coder:7b",
+    "math": [
+      5,
+      6
+    ],
+    "coding": [
+      3,
+      3
+    ],
+    "literature": [
+      2,
+      3
+    ],
+    "seconds": 57.5
+  },
+  {
+    "model": "qwen2.5-coder:1.5b",
+    "math": [
+      5,
+      6
+    ],
+    "coding": [
+      3,
+      3
+    ],
+    "literature": [
+      3,
+      3
+    ],
+    "seconds": 12.6
+  },
+  {
+    "model": "qwen3:14b",
+    "math": [
+      6,
+      6
+    ],
+    "coding": [
+      3,
+      3
+    ],
+    "literature": [
+      3,
+      3
+    ],
+    "seconds": 177.7
+  },
+  {
+    "model": "qwen3:8b",
+    "math": [
+      4,
+      6
+    ],
+    "coding": [
+      3,
+      3
+    ],
+    "literature": [
+      3,
+      3
+    ],
+    "seconds": 68.4
+  },
+  {
+    "model": "gpt-oss:20b",
+    "error": "HTTPError: HTTP Error 500: Internal Server Error",
+    "seconds": 0.4
+  }
+]

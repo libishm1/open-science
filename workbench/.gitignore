@@ -1,0 +1,4 @@
+__pycache__/
+*.pyc
+benchmarks/out_diagrams/
+benchmarks/*.log
