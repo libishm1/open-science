@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Install - Open-Science Workbench fork</title>
+<meta name="description" content="Install and use the Open-Science Workbench fork with local AI models and bundled skills for science, medicine, AEC and robotics.">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header class="site"><div class="wrap">
+<a class="brand" href="index.html">Open-Science Workbench fork</a>
+<nav><a href="index.html">Home</a> <a href="install.html" aria-current="page">Install</a> <a href="skills.html">Skills</a> <a href="models.html">Local models</a> <a href="science.html">Science and bioinformatics</a> <a href="medicine.html">Medicine and clinical research</a> <a href="aec.html">AEC</a> <a href="robotics.html">Robotics</a> <a href="faq.html">Help</a></nav>
+</div></header>
+<main><div class="wrap">
+<h1>Install</h1>
+<p class="lead">Everything works by clicking and asking. No terminal or command line is needed.</p>
+
+<h2 id="app">1. Install the desktop app (Windows)</h2>
+<ol class="steps">
+  <li>Open the <a href="https://github.com/libishm1/open-science/releases">releases page</a>.</li>
+  <li>Under <b>Assets</b>, download the file ending in <code>-win-x64-setup.exe</code>.</li>
+  <li>Double-click it. Windows may show "Windows protected your PC" because this build is not code-signed.
+      Choose <b>More info</b>, check that the file came from the releases page, then choose <b>Run anyway</b>.</li>
+  <li>Follow the installer. It installs for your user account only and does not need administrator rights.</li>
+  <li>Open <b>Open-Science</b> from the Start menu or the desktop shortcut.</li>
+</ol>
+<div class="warn">Only download the installer from the releases page linked above. Compare its size with the one
+listed on the release before running it.</div>
+<div class="note"><b>If you already have AIPOCH Open-Science installed:</b> this fork uses the same app identity, so
+installing it replaces the upstream app. Your projects stay. After that, the app checks this fork's GitHub
+releases for updates, not AIPOCH's, so an upstream update cannot remove the fork's skills.</div>
+
+<h2 id="models">2. Get a local AI model (free, private, works offline)</h2>
+<p>Local models run on your own computer. Nothing you type or attach leaves it.</p>
+<ol class="steps">
+  <li>Download and install the <a href="https://ollama.com/download">Ollama desktop app</a>. Run its installer like any other program.</li>
+  <li>Open the Ollama app. Choose a model in its model menu and send it a short message such as "hello".
+      The app downloads the model the first time. Which model to pick:
+    <ul>
+      <li>Most people: <b>qwen3:8b</b></li>
+      <li>Coding: <b>qwen2.5-coder:7b</b></li>
+      <li>Older laptop with 8 GB of memory: <b>qwen2.5-coder:1.5b</b></li>
+    </ul>
+    See <a href="models.html">Local models</a> for the measurements behind these choices.</li>
+  <li>Leave Ollama running. It sits in the system tray.</li>
+</ol>
+<p class="note">The model menu in the Ollama app is described in public reviews of its desktop app. If your version has no
+model menu, the <a href="#advanced">advanced section</a> shows the one command that downloads a model.</p>
+
+<h2 id="connect">3. Connect the model to Open-Science</h2>
+<ol class="steps">
+  <li>In Open-Science, open the settings and go to the model providers.</li>
+  <li>Add a provider and choose the <b>Ollama</b> preset. Its address is <code>http://localhost:11434</code>. No key is needed.</li>
+  <li>Select the model you downloaded.</li>
+  <li>Create a project, then type what you want in plain language. Attach the files the task needs to the conversation.</li>
+</ol>
+<p>LM Studio, llama.cpp and vLLM have presets too, if you already use one of them.</p>
+
+<h2 id="cloud">4. Optional: a cloud model</h2>
+<p>For harder tasks you can add a cloud model. It is optional and off until you add a key.</p>
+<ol class="steps">
+  <li>In the app's model provider settings, choose <b>Anthropic</b> (Claude) or <b>OpenAI</b>.</li>
+  <li>Paste your API key and save. The app encrypts the key with your operating system's protection.</li>
+  <li>Select the cloud model for a project only when the data may leave your computer. Keep patient data and
+      unpublished data on local models.</li>
+</ol>
+
+<h2 id="skills">5. Using the skills</h2>
+<p>You do not need to choose a skill. Describe the task, and the agent loads the matching skill, for example:</p>
+<ul>
+  <li>"Count my screening results and draw the PRISMA flow" with your screening spreadsheet attached.</li>
+  <li>"Make a figure of PDB 1UBQ for a two-column journal."</li>
+  <li>"Convert this PDF to text and summarise the methods section."</li>
+  <li>"Write a Grasshopper component that panels this surface."</li>
+</ul>
+<p>Each field guide has more examples: <a href="science.html">science and bioinformatics</a>,
+<a href="medicine.html">medicine and clinical research</a>, <a href="aec.html">AEC</a>, <a href="robotics.html">robotics</a>.</p>
+
+<h2 id="advanced">Advanced: command line, scripting, VS Code</h2>
+<p>Only needed for automation, other AI agents, or scripting. Everything above works without it.</p>
+<p>Download a model with one command, if the Ollama app has no model menu:</p>
+<pre><code>ollama pull qwen3:8b</code></pre>
+<p>The command-line workbench is in the
+<a href="https://github.com/libishm1/open-science/tree/v1.0.2-workbench.1/workbench"><code>workbench</code> folder</a> of the fork
+(<code>git clone --branch v1.0.2-workbench.1 https://github.com/libishm1/open-science.git</code>, or the source ZIP on the release).
+From that folder:</p>
+<pre><code>powershell -ExecutionPolicy Bypass -File install.ps1 -Profile coding   # Windows
+./install.sh --profile literature                                       # Linux and macOS</code></pre>
+<p>Then <code>python -m lawb doctor</code>, <code>python -m lawb models recommend</code>, and
+<code>python -m lawb skills list</code>. Cloud keys for the command line go in your operating system's credential store
+with <code>python -m lawb keys set anthropic</code>.</p>
+<p>The <a href="https://github.com/libishm1/Workbench/tree/vscode-plugin">VS Code extension</a> runs the same commands from the
+Command Palette (search "LAWB").</p>
+
+<h2>macOS and Linux</h2>
+<p>No prebuilt installer is published for this fork yet. Build from source with <code>npm ci</code>, then
+<code>npm run build:mac</code> or <code>npm run build:linux</code>.</p>
+
+</div></main>
+<footer><div class="wrap">
+This is a community fork of <a href="https://github.com/aipoch/open-science">AIPOCH Open-Science</a>.
+It is not affiliated with or endorsed by AIPOCH. Source: <a href="https://github.com/libishm1/open-science">libishm1/open-science</a>.
+The app and the skills are research aids. Check every result before you rely on it.
+</div></footer>
+</body>
+</html>

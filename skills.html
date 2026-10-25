@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Skills - Open-Science Workbench fork</title>
+<meta name="description" content="Install and use the Open-Science Workbench fork with local AI models and bundled skills for science, medicine, AEC and robotics.">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header class="site"><div class="wrap">
+<a class="brand" href="index.html">Open-Science Workbench fork</a>
+<nav><a href="index.html">Home</a> <a href="install.html">Install</a> <a href="skills.html" aria-current="page">Skills</a> <a href="models.html">Local models</a> <a href="science.html">Science and bioinformatics</a> <a href="medicine.html">Medicine and clinical research</a> <a href="aec.html">AEC</a> <a href="robotics.html">Robotics</a> <a href="faq.html">Help</a></nav>
+</div></header>
+<main><div class="wrap">
+<h1>Skills</h1>
+<p class="lead">A skill is a folder with a <code>SKILL.md</code> file: a procedure, checklists and templates an
+agent follows. The app loads the right one from your request.</p>
+
+<h2>How small local models use skills</h2>
+<ul>
+  <li>Every fork skill has a <b>Quick start</b> section of five or six numbered steps near the top.</li>
+  <li>The entry file is under 150 lines. Longer material sits in <code>references/</code> files that the agent loads one at a time.</li>
+  <li>Long references start with a <b>Contents</b> list with line numbers, so a model can read one section.</li>
+</ul>
+
+<h2>Skills added in this fork (17)</h2>
+<table>
+  <tr><th>Skill</th><th>Use it for</th></tr>
+  <tr><td><code>computational-design</code></td><td>Grasshopper and parametric design, GraphML for buildings, Topologic and IFC, simulation, structure, facades, fabrication, design framing</td></tr>
+  <tr><td><code>rhino-mcp-setup</code></td><td>Connecting an agent to Rhino 8 through MCP and deploying plugins safely</td></tr>
+  <tr><td><code>rhino-gh-components</code></td><td>Writing Grasshopper components: data matching, solve rules, sync or async, units</td></tr>
+  <tr><td><code>rhino-gh-presentation-checks</code></td><td>Presentable, checkable Grasshopper examples and captures</td></tr>
+  <tr><td><code>aec-research-workflow</code></td><td>AEC research: simulation papers, PRISMA reviews, manuscripts, venues, fabrication planning</td></tr>
+  <tr><td><code>robotics-ros2-ur</code></td><td>ROS 2 and Universal Robots: safety levels, poses and frames, URScript, simulation first</td></tr>
+  <tr><td><code>molecular-figure-design</code></td><td>Publication figures with real protein structures, verified PDB entries, collision checks</td></tr>
+  <tr><td><code>research-synthesis</code></td><td>Counted literature reviews: PRISMA 2020, extraction cards, cross-discipline synthesis, gap analysis</td></tr>
+  <tr><td><code>pdf-to-markdown</code></td><td>Full PDF text and tables to markdown, with caching</td></tr>
+  <tr><td><code>academic-paper-strategist</code></td><td>Planning a paper: venue, research gap, originality, outline</td></tr>
+  <tr><td><code>academic-paper-composer</code></td><td>Writing a paper from an outline, chapter by chapter, with quality checks</td></tr>
+  <tr><td><code>latex-document</code></td><td>LaTeX papers, reports and letters compiled to PDF with Tectonic or latexmk</td></tr>
+  <tr><td><code>lean-verification</code></td><td>Proofs in Lean 4 and Mathlib, CI gates, audits, property tests against real code</td></tr>
+  <tr><td><code>ai-debugging</code></td><td>Debugging C and C++, C# and .NET, and RhinoCommon plugins with an agent</td></tr>
+  <tr><td><code>tamil-translator</code></td><td>English and Tamil translation with OCR and a line-by-line bilingual draft</td></tr>
+  <tr><td><code>conversation-handoff</code></td><td>Local digests of past agent sessions, for picking work back up</td></tr>
+  <tr><td><code>local-model-setup</code></td><td>Choosing, installing and testing a local model for a task</td></tr>
+</table>
+
+<h2>Skills from upstream Open-Science</h2>
+<p>The app also ships AIPOCH's own skills, unchanged: structure prediction (<code>alphafold2</code>, <code>esmfold2</code>,
+<code>openfold3</code>, <code>boltz</code>, <code>chai1</code>), protein design (<code>proteinmpnn</code>, <code>ligandmpnn</code>,
+<code>solublempnn</code>), docking (<code>diffdock</code>), sequence models (<code>evo2</code>, <code>borzoi</code>,
+<code>fair-esm2</code>), single-cell (<code>scvi-tools</code>, <code>scgpt</code>), <code>literature-review</code>,
+<code>indication-dossier</code>, figures (<code>figure-composer</code>, <code>figure-style</code>, <code>paper-narrative</code>),
+and compute setup (<code>remote-compute-ssh</code>, <code>compute-env-setup</code>).</p>
+
+<h2>Using a skill outside the app</h2>
+<ul>
+  <li><b>Claude Code:</b> copy a skill folder into <code>.claude/skills/</code> in your project, or <code>~/.claude/skills/</code>.</li>
+  <li><b>Codex and other agents:</b> point the agent at the skill's <code>SKILL.md</code>.</li>
+  <li><b>Local models:</b> give the model the Quick start and one reference file.</li>
+  <li><b>Command line:</b> <code>python -m lawb skills show &lt;name&gt; --section "Quick start (for small local models)"</code>.</li>
+</ul>
+
+<h2>What is not included</h2>
+<p>A third-party LaTeX skill used privately was left out because its licence does not allow redistribution.
+The <code>latex-document</code> skill above is an original replacement.</p>
+
+</div></main>
+<footer><div class="wrap">
+This is a community fork of <a href="https://github.com/aipoch/open-science">AIPOCH Open-Science</a>.
+It is not affiliated with or endorsed by AIPOCH. Source: <a href="https://github.com/libishm1/open-science">libishm1/open-science</a>.
+The app and the skills are research aids. Check every result before you rely on it.
+</div></footer>
+</body>
+</html>

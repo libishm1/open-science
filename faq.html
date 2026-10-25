@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Help - Open-Science Workbench fork</title>
+<meta name="description" content="Install and use the Open-Science Workbench fork with local AI models and bundled skills for science, medicine, AEC and robotics.">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header class="site"><div class="wrap">
+<a class="brand" href="index.html">Open-Science Workbench fork</a>
+<nav><a href="index.html">Home</a> <a href="install.html">Install</a> <a href="skills.html">Skills</a> <a href="models.html">Local models</a> <a href="science.html">Science and bioinformatics</a> <a href="medicine.html">Medicine and clinical research</a> <a href="aec.html">AEC</a> <a href="robotics.html">Robotics</a> <a href="faq.html" aria-current="page">Help</a></nav>
+</div></header>
+<main><div class="wrap">
+<h1>Help</h1>
+
+<h2>Windows says it protected my PC</h2>
+<p>The installer is not code-signed, so SmartScreen warns about it. Choose <b>More info</b>, check that the file
+came from the <a href="https://github.com/libishm1/open-science/releases">releases page</a>, then <b>Run anyway</b>.</p>
+
+<h2>A model fails with "read GGUF metadata ... size overflows"</h2>
+<p>The model file was downloaded for an older Ollama. Run <code>ollama rm &lt;model&gt;</code> and then
+<code>ollama pull &lt;model&gt;</code>.</p>
+
+<h2>Replies are very slow</h2>
+<p>The model is larger than your GPU memory and runs on the CPU. Use the smaller option on the
+<a href="models.html">Local models</a> page, or close other programs that use the GPU.</p>
+
+<h2>The app cannot reach Ollama</h2>
+<p>Start the Ollama app (or run <code>ollama serve</code>). In the app, the provider address is
+<code>http://localhost:11434</code>, with no key.</p>
+
+<h2>Is my data sent anywhere?</h2>
+<p>Not with local models. Cloud models are used only if you add a key and choose a cloud model. With the
+command-line workbench, <code>python -m lawb cloud-log</code> lists every cloud call.</p>
+
+<h2>The command line prints strange characters</h2>
+<p>Update to the latest workbench. It sets UTF-8 output itself, so Tamil and other scripts print correctly
+in the Windows console.</p>
+
+<h2>Where do I report a problem?</h2>
+<p>Open an issue on <a href="https://github.com/libishm1/open-science/issues">libishm1/open-science</a>.
+For problems in the upstream app that also happen in AIPOCH's release, report them to
+<a href="https://github.com/aipoch/open-science">aipoch/open-science</a>.</p>
+
+</div></main>
+<footer><div class="wrap">
+This is a community fork of <a href="https://github.com/aipoch/open-science">AIPOCH Open-Science</a>.
+It is not affiliated with or endorsed by AIPOCH. Source: <a href="https://github.com/libishm1/open-science">libishm1/open-science</a>.
+The app and the skills are research aids. Check every result before you rely on it.
+</div></footer>
+</body>
+</html>

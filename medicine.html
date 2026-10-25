@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Medicine and clinical research - Open-Science Workbench fork</title>
+<meta name="description" content="Install and use the Open-Science Workbench fork with local AI models and bundled skills for science, medicine, AEC and robotics.">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header class="site"><div class="wrap">
+<a class="brand" href="index.html">Open-Science Workbench fork</a>
+<nav><a href="index.html">Home</a> <a href="install.html">Install</a> <a href="skills.html">Skills</a> <a href="models.html">Local models</a> <a href="science.html">Science and bioinformatics</a> <a href="medicine.html" aria-current="page">Medicine and clinical research</a> <a href="aec.html">AEC</a> <a href="robotics.html">Robotics</a> <a href="faq.html">Help</a></nav>
+</div></header>
+<main><div class="wrap">
+<h1>Medicine and clinical research</h1>
+<p class="lead">Systematic reviews, guideline and trial reading, and research writing for clinicians and
+clinical researchers, with patient data kept on your own computer.</p>
+
+<div class="warn"><b>Not for clinical decisions.</b> This app and its skills are research and writing aids.
+They are not a medical device, have not been clinically validated, and must not be used to diagnose,
+treat, or decide on the care of a patient. A qualified professional must check every output.</div>
+
+<h2>Patient data and privacy</h2>
+<ul>
+  <li><b>Use local models for anything identifiable.</b> With Ollama, prompts and files stay on your machine.
+      Cloud models are off by default; do not enable them for patient data.</li>
+  <li><b>De-identify first.</b> Remove names, dates of birth, record numbers, addresses, and free-text
+      identifiers before analysis, following your institution's rules.</li>
+  <li><b>Follow your approvals.</b> Running locally does not replace ethics approval, data-protection
+      agreements, or your institution's information-governance rules. The software is not certified
+      for HIPAA, GDPR, or any other regulation.</li>
+  <li><b>Check the provider before you start.</b> In each project with patient data, confirm the selected model provider is
+      Ollama or another local server, not a cloud provider.</li>
+</ul>
+
+<h2>Systematic reviews and meta-analysis preparation</h2>
+<table>
+  <tr><th>Step</th><th>Skill or tool</th><th>Source</th></tr>
+  <tr><td>Write the protocol (PICO, search strands, inclusion and exclusion) before searching</td><td><code>research-synthesis</code> protocol template</td><td>fork</td></tr>
+  <tr><td>Search and verify that each paper is real</td><td><code>literature-review</code></td><td>upstream</td></tr>
+  <tr><td>Screen titles and abstracts, record every exclusion with a reason</td><td><code>research-synthesis</code></td><td>fork</td></tr>
+  <tr><td>Extract data from full texts, with tables</td><td><code>pdf-to-markdown</code> and extraction cards</td><td>fork</td></tr>
+  <tr><td>PRISMA 2020 counts and flow diagram that re-derive from the screening file</td><td><code>research-synthesis</code> helper: attach the CSV and ask for the PRISMA flow</td><td>fork</td></tr>
+  <tr><td>Indication background: population, epidemiology, standard of care, landmark trials</td><td><code>indication-dossier</code></td><td>upstream</td></tr>
+</table>
+<p>The counting rules in <code>research-synthesis</code> fit clinical reviews well: every exclusion has a count and
+a reason, comparison tables need one shared outcome measure, and a rapid AI-assisted search is reported as
+a rapid map, not an exhaustive search.</p>
+
+<h3>Example: screening a set of trial reports</h3>
+<ol class="steps">
+  <li>Export the search results to a CSV and add the columns <code>duplicate, stage, decision, reason</code>.</li>
+  <li>Ask a local model to propose include or exclude for each abstract against your criteria, with the reason.</li>
+  <li>Check every proposal yourself. The model's decision is a suggestion, not a screening result.</li>
+  <li>Ask the app: "Count my screening results and draw the PRISMA flow." You get the counts and a flow diagram to put in the paper.</li>
+</ol>
+
+<h2>Reading guidelines and trial reports</h2>
+<ul>
+  <li>Convert long guideline PDFs with <code>pdf-to-markdown</code> and read them section by section.</li>
+  <li>Ask for the page number behind every recommendation the agent quotes, and open the page to check it.</li>
+  <li>For translated material, <code>tamil-translator</code> (fork) gives a line-by-line bilingual draft. Medical
+      translations still need review by a qualified translator.</li>
+</ul>
+
+<h2>Writing and figures</h2>
+<ul>
+  <li>Plan and write manuscripts with <code>academic-paper-strategist</code> and <code>academic-paper-composer</code>, and typeset
+      with <code>latex-document</code>.</li>
+  <li>Use the upstream <code>figure-style</code> rules for forest plots, flow diagrams and outcome figures.</li>
+  <li>Follow the reporting guideline for your study type (for example CONSORT, PRISMA, STROBE) and keep its checklist next to the draft.</li>
+</ul>
+
+<h2>Which local model</h2>
+<p>For screening and extraction, the <a href="models.html">literature column of the model table</a> shows how each
+local model did on extraction, screening, and refusing to invent a reference. Re-run the benchmark on your
+own computer before relying on a model.</p>
+
+</div></main>
+<footer><div class="wrap">
+This is a community fork of <a href="https://github.com/aipoch/open-science">AIPOCH Open-Science</a>.
+It is not affiliated with or endorsed by AIPOCH. Source: <a href="https://github.com/libishm1/open-science">libishm1/open-science</a>.
+The app and the skills are research aids. Check every result before you rely on it.
+</div></footer>
+</body>
+</html>

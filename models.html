@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Local models - Open-Science Workbench fork</title>
+<meta name="description" content="Install and use the Open-Science Workbench fork with local AI models and bundled skills for science, medicine, AEC and robotics.">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header class="site"><div class="wrap">
+<a class="brand" href="index.html">Open-Science Workbench fork</a>
+<nav><a href="index.html">Home</a> <a href="install.html">Install</a> <a href="skills.html">Skills</a> <a href="models.html" aria-current="page">Local models</a> <a href="science.html">Science and bioinformatics</a> <a href="medicine.html">Medicine and clinical research</a> <a href="aec.html">AEC</a> <a href="robotics.html">Robotics</a> <a href="faq.html">Help</a></nav>
+</div></header>
+<main><div class="wrap">
+<h1>Local models</h1>
+<p class="lead">Which model to run for coding, math, literature review and general work, measured, and how
+to install it in one command.</p>
+
+<h2>Recommendations</h2>
+<table>
+  <tr><th>Task</th><th>Model</th><th>Smaller option</th><th>Why</th></tr>
+  <tr><td>Coding</td><td><code>qwen2.5-coder:7b</code></td><td><code>qwen2.5-coder:1.5b</code></td><td>3/3 coding tasks, and fixed all four faults in a multi-step error loop. The 1.5B model passes single functions but failed the loop.</td></tr>
+  <tr><td>Math</td><td><code>qwen3:14b</code></td><td><code>qwen2.5-coder:7b</code></td><td>6/6 problems, about three times slower. The 7B coder scored 5/6.</td></tr>
+  <tr><td>Literature review</td><td><code>qwen3:8b</code></td><td><code>qwen2.5-coder:1.5b</code></td><td>3/3 on extraction, screening, and refusing to invent a reference.</td></tr>
+  <tr><td>General use</td><td><code>qwen3:8b</code></td><td><code>qwen2.5-coder:1.5b</code></td><td>Followed the skills in 7/7 tasks. The 1.5B model followed 5/7.</td></tr>
+</table>
+
+<h2>Measurements</h2>
+<p>Exact-answer tasks: 6 math problems, 3 coding tasks run against unit tests, and 3 literature tasks.
+Temperature 0, thinking off. Measured on Windows 11 with an Intel i9-9880H, 64 GB RAM and an NVIDIA Quadro RTX 4000 (8 GB).</p>
+<table>
+  <tr><th>Model</th><th>Math (of 6)</th><th>Coding (of 3)</th><th>Literature (of 3)</th><th>Time for all tasks</th></tr>
+  <tr><td><code>qwen3:14b</code></td><td>6</td><td>3</td><td>3</td><td>178 s</td></tr>
+  <tr><td><code>qwen3:8b</code></td><td>4</td><td>3</td><td>3</td><td>68 s</td></tr>
+  <tr><td><code>qwen2.5-coder:7b</code></td><td>5</td><td>3</td><td>2</td><td>58 s</td></tr>
+  <tr><td><code>qwen2.5-coder:1.5b</code></td><td>5</td><td>3</td><td>3</td><td>13 s</td></tr>
+</table>
+<div class="note">These are small test sets on one computer. Use them as a starting point. To measure your own
+computer, run <code>python benchmarks/task_models.py</code> from the workbench folder.</div>
+
+<h2>Install a model</h2>
+<p><b>Without the command line:</b> open the <a href="https://ollama.com/download">Ollama desktop app</a>, choose the model
+in its model menu, and send a short message. It downloads the first time. Then select it in Open-Science's provider
+settings (Ollama preset, <code>http://localhost:11434</code>).</p>
+<p><b>With the command line (advanced):</b></p>
+<pre><code>python -m lawb models recommend              # the table above, with what you have installed
+python -m lawb models install --task coding  # pulls the coding model and its smaller option
+python -m lawb models install --task all     # every recommended model</code></pre>
+<p>Or pull a single model with Ollama directly: <code>ollama pull qwen3:8b</code>.</p>
+
+<h2>Hardware guide</h2>
+<table>
+  <tr><th>Memory available</th><th>What fits</th></tr>
+  <tr><td>8 GB RAM, no GPU</td><td>1.5B models. Usable for short tasks</td></tr>
+  <tr><td>16 GB RAM, or a GPU with 8 GB</td><td>7B and 8B models</td></tr>
+  <tr><td>32 GB RAM or more, or a GPU with 12 GB or more</td><td>14B models at a usable speed</td></tr>
+</table>
+
+<h2>Bundling models into the installer</h2>
+<p>Model weights are several gigabytes each, so they are not packed into the app installer. The installer
+scripts and <code>lawb models install</code> download them on first setup instead, and they then work offline.</p>
+
+</div></main>
+<footer><div class="wrap">
+This is a community fork of <a href="https://github.com/aipoch/open-science">AIPOCH Open-Science</a>.
+It is not affiliated with or endorsed by AIPOCH. Source: <a href="https://github.com/libishm1/open-science">libishm1/open-science</a>.
+The app and the skills are research aids. Check every result before you rely on it.
+</div></footer>
+</body>
+</html>

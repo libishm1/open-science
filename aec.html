@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AEC - Open-Science Workbench fork</title>
+<meta name="description" content="Install and use the Open-Science Workbench fork with local AI models and bundled skills for science, medicine, AEC and robotics.">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header class="site"><div class="wrap">
+<a class="brand" href="index.html">Open-Science Workbench fork</a>
+<nav><a href="index.html">Home</a> <a href="install.html">Install</a> <a href="skills.html">Skills</a> <a href="models.html">Local models</a> <a href="science.html">Science and bioinformatics</a> <a href="medicine.html">Medicine and clinical research</a> <a href="aec.html" aria-current="page">AEC</a> <a href="robotics.html">Robotics</a> <a href="faq.html">Help</a></nav>
+</div></header>
+<main><div class="wrap">
+<h1>Architecture, engineering and construction</h1>
+<p class="lead">Computational design, Grasshopper and Rhino through AI agents, building-performance papers,
+and fabrication planning.</p>
+
+<h2>Skills for AEC</h2>
+<table>
+  <tr><th>Task</th><th>Skill</th></tr>
+  <tr><td>Parametric and generative design, GraphML for buildings, Topologic and IFC, environmental simulation, structure, facades, fabrication</td><td><code>computational-design</code></td></tr>
+  <tr><td>Connect an agent to a running Rhino 8 through MCP and deploy Grasshopper plugins safely</td><td><code>rhino-mcp-setup</code></td></tr>
+  <tr><td>Write and wire Grasshopper components: data matching, solve rules, sync or async, units and tolerances</td><td><code>rhino-gh-components</code></td></tr>
+  <tr><td>Present and check Grasshopper examples: final form on the canvas, captures, numbered saves</td><td><code>rhino-gh-presentation-checks</code></td></tr>
+  <tr><td>Simulation papers, literature and PRISMA reviews, manuscript build, venues, fabrication planning</td><td><code>aec-research-workflow</code></td></tr>
+  <tr><td>Design flows: top-down (form first, then material) and bottom-up (material first)</td><td><code>computational-design</code> design-framing reference</td></tr>
+  <tr><td>Debug Rhino and Grasshopper plugins (RhinoCommon, .NET, native code)</td><td><code>ai-debugging</code></td></tr>
+</table>
+<p>All of these are fork skills. Each has a short Quick start, so small local models can follow it.</p>
+
+<h2>Platform notes</h2>
+<ul>
+  <li>Rhino and Grasshopper run on Windows and macOS only. From Linux, drive a Rhino host on another machine.</li>
+  <li>Python, IFC, Topologic and graph-ML steps run on every platform.</li>
+  <li>Check the document units before modelling: metres for site and building scale, millimetres for shop parts.</li>
+</ul>
+
+<h2>Example: a Grasshopper component with an agent</h2>
+<ol class="steps">
+  <li>Start Rhino with the MCP plugin loaded and run its start command. The <code>rhino-mcp-setup</code> skill lists the checks.</li>
+  <li>Ask the agent to write the component. It follows <code>rhino-gh-components</code>: decide the data match first,
+      keep the component synchronous unless it loads a large file, and derive tolerances from the model's size.</li>
+  <li>Before you call it done, it follows <code>rhino-gh-presentation-checks</code>: the final form appears on the
+      canvas without a script, the file reopens cold, and a numbered copy is saved.</li>
+  <li>Check the result on the Rhino canvas yourself. A passing test does not prove the geometry is right.</li>
+</ol>
+
+<h2>Example: a building-performance paper</h2>
+<ol class="steps">
+  <li>Plan the simulation campaign and the review with <code>aec-research-workflow</code>.</li>
+  <li>Screen and count the literature with <code>research-synthesis</code> and <code>lawb review</code>.</li>
+  <li>Build the manuscript with <code>academic-paper-composer</code> and <code>latex-document</code>.</li>
+</ol>
+
+<h2>Which local model</h2>
+<p>For component code and scripting, use the coding recommendation on the <a href="models.html">Local models</a> page.</p>
+
+</div></main>
+<footer><div class="wrap">
+This is a community fork of <a href="https://github.com/aipoch/open-science">AIPOCH Open-Science</a>.
+It is not affiliated with or endorsed by AIPOCH. Source: <a href="https://github.com/libishm1/open-science">libishm1/open-science</a>.
+The app and the skills are research aids. Check every result before you rely on it.
+</div></footer>
+</body>
+</html>

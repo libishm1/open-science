@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Science and bioinformatics - Open-Science Workbench fork</title>
+<meta name="description" content="Install and use the Open-Science Workbench fork with local AI models and bundled skills for science, medicine, AEC and robotics.">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header class="site"><div class="wrap">
+<a class="brand" href="index.html">Open-Science Workbench fork</a>
+<nav><a href="index.html">Home</a> <a href="install.html">Install</a> <a href="skills.html">Skills</a> <a href="models.html">Local models</a> <a href="science.html" aria-current="page">Science and bioinformatics</a> <a href="medicine.html">Medicine and clinical research</a> <a href="aec.html">AEC</a> <a href="robotics.html">Robotics</a> <a href="faq.html">Help</a></nav>
+</div></header>
+<main><div class="wrap">
+<h1>Science and bioinformatics</h1>
+<p class="lead">Protein structure work, sequence and single-cell models, publication figures, literature
+reviews and reproducible analysis, with the skills that ship in the app.</p>
+
+<div class="note">Skills marked <b>upstream</b> come from AIPOCH Open-Science and ship unchanged in this fork.
+Skills marked <b>fork</b> were added in this fork. Ask the agent for a skill by describing the task; it
+loads the matching skill.</div>
+
+<h2>Protein structure and design</h2>
+<table>
+  <tr><th>Task</th><th>Skill</th><th>Source</th></tr>
+  <tr><td>Predict a monomer or multimer structure</td><td><code>alphafold2</code> (ColabFold runner)</td><td>upstream</td></tr>
+  <tr><td>All-atom co-folding with ligands, DNA or RNA</td><td><code>esmfold2</code>, <code>openfold3</code>, <code>boltz</code>, <code>chai1</code></td><td>upstream</td></tr>
+  <tr><td>Design a sequence for a backbone</td><td><code>proteinmpnn</code>; with ligand or metal context <code>ligandmpnn</code>; for soluble expression <code>solublempnn</code></td><td>upstream</td></tr>
+  <tr><td>Dock a small molecule into a protein</td><td><code>diffdock</code></td><td>upstream</td></tr>
+  <tr><td>Publication figures of proteins and molecules, with checked PDB inputs</td><td><code>molecular-figure-design</code></td><td>fork</td></tr>
+</table>
+
+<h3>Example: a protein figure for a paper</h3>
+<ol class="steps">
+  <li>Ask: "Make a figure of PDB 1UBQ showing its secondary structure, sized for a two-column journal."</li>
+  <li>The agent loads <code>molecular-figure-design</code>, confirms the entry with its <code>verify_pdb.py</code> script,
+      renders the structure from the deposited coordinates with matplotlib (no PyMOL needed), and runs
+      <code>check_overlaps.py</code> so labels do not collide.</li>
+  <li>It fixes the figure to the journal's column width and exports PDF and SVG with live text, and TIFF at 600 dpi.
+      Check the figure against the claim it supports before using it.</li>
+</ol>
+<p>Structure prediction models need a GPU. If your computer has none, use the upstream
+<code>remote-compute-ssh</code> skill to run them on a server, and <code>compute-env-setup</code> to prepare that environment.</p>
+
+<h2>Sequences and single-cell data</h2>
+<table>
+  <tr><th>Task</th><th>Skill</th><th>Source</th></tr>
+  <tr><td>Score, embed or generate DNA sequences</td><td><code>evo2</code></td><td>upstream</td></tr>
+  <tr><td>Predict regulatory tracks and variant effects from DNA</td><td><code>borzoi</code></td><td>upstream</td></tr>
+  <tr><td>Protein embeddings and masked-language scores</td><td><code>fair-esm2</code></td><td>upstream</td></tr>
+  <tr><td>Batch correction, label transfer, differential expression</td><td><code>scvi-tools</code></td><td>upstream</td></tr>
+  <tr><td>Cell embeddings and annotation</td><td><code>scgpt</code></td><td>upstream</td></tr>
+</table>
+
+<h2>Literature reviews</h2>
+<table>
+  <tr><th>Task</th><th>Skill</th><th>Source</th></tr>
+  <tr><td>Find, verify and synthesise papers</td><td><code>literature-review</code></td><td>upstream</td></tr>
+  <tr><td>Counted reviews: PRISMA 2020 flow, extraction cards, cross-discipline synthesis, gap analysis</td><td><code>research-synthesis</code></td><td>fork</td></tr>
+  <tr><td>Full text from PDFs, with tables</td><td><code>pdf-to-markdown</code></td><td>fork</td></tr>
+  <tr><td>Plan a paper and check originality, then write it chapter by chapter</td><td><code>academic-paper-strategist</code>, <code>academic-paper-composer</code></td><td>fork</td></tr>
+  <tr><td>Typeset the manuscript</td><td><code>latex-document</code></td><td>fork</td></tr>
+</table>
+<h3>Example: screening counts and a PRISMA diagram that a reviewer can check</h3>
+<ol class="steps">
+  <li>Keep one row per record in a spreadsheet saved as CSV, with the columns
+      <code>record_id, strand, year, type, duplicate, stage, decision, reason</code>.</li>
+  <li>In the app, attach the CSV and ask: "Count my screening results and draw the PRISMA flow."</li>
+  <li>The agent runs the <code>research-synthesis</code> helper and returns the counts and a flow diagram (<code>flow.svg</code>).
+      Every number is computed from your rows, so a reviewer can re-derive it.</li>
+</ol>
+
+<h2>Figures and paper narrative</h2>
+<p>For data figures, the upstream <code>figure-composer</code>, <code>figure-style</code> and <code>paper-narrative</code>
+skills cover multi-panel layout, legibility rules and the story across a figure deck.</p>
+
+<h2>Proofs and verified methods</h2>
+<p>For a method with mathematical guarantees, <code>lean-verification</code> (fork) gives the procedure for proving
+results in Lean 4 with Mathlib, with an honesty rule (proved, cited axiom, or prose, never <code>sorry</code>),
+CI gates, and property tests that check the real code against each proven invariant.</p>
+
+<h2>Good practice</h2>
+<ul>
+  <li>Keep raw data read-only and record every transformation in the notebook.</li>
+  <li>Ask the agent to cite the file and line, or the paper and page, behind each claim.</li>
+  <li>Use a local model for anything that includes unpublished data.</li>
+</ul>
+
+</div></main>
+<footer><div class="wrap">
+This is a community fork of <a href="https://github.com/aipoch/open-science">AIPOCH Open-Science</a>.
+It is not affiliated with or endorsed by AIPOCH. Source: <a href="https://github.com/libishm1/open-science">libishm1/open-science</a>.
+The app and the skills are research aids. Check every result before you rely on it.
+</div></footer>
+</body>
+</html>

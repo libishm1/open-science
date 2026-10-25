@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Robotics - Open-Science Workbench fork</title>
+<meta name="description" content="Install and use the Open-Science Workbench fork with local AI models and bundled skills for science, medicine, AEC and robotics.">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header class="site"><div class="wrap">
+<a class="brand" href="index.html">Open-Science Workbench fork</a>
+<nav><a href="index.html">Home</a> <a href="install.html">Install</a> <a href="skills.html">Skills</a> <a href="models.html">Local models</a> <a href="science.html">Science and bioinformatics</a> <a href="medicine.html">Medicine and clinical research</a> <a href="aec.html">AEC</a> <a href="robotics.html" aria-current="page">Robotics</a> <a href="faq.html">Help</a></nav>
+</div></header>
+<main><div class="wrap">
+<h1>Robotics</h1>
+<p class="lead">ROS 2 on Ubuntu, Universal Robots arms, and a clear path from code generation to simulation
+before any hardware runs.</p>
+
+<div class="warn"><b>No motion on hardware from an agent.</b> The robotics skill generates and checks code
+and runs simulations. Running a program on a real robot needs an explicit hardware flag, a reviewed
+program, and a person in charge of the cell.</div>
+
+<h2>Skills for robotics</h2>
+<table>
+  <tr><th>Task</th><th>Skill</th></tr>
+  <tr><td>ROS 2 nodes, URScript, pose and frame conversion, simulation, replay with ros2 bag</td><td><code>robotics-ros2-ur</code></td></tr>
+  <tr><td>Robot programs from Grasshopper designs, and fabrication planning</td><td><code>computational-design</code> robotic-fabrication reference</td></tr>
+  <tr><td>Debug C++ nodes, drivers and native code</td><td><code>ai-debugging</code></td></tr>
+  <tr><td>Prove properties of a planner or controller, and test the code against them</td><td><code>lean-verification</code></td></tr>
+</table>
+
+<h2>Safety levels</h2>
+<table>
+  <tr><th>Level</th><th>What runs</th><th>Default</th></tr>
+  <tr><td>1</td><td>Offline: code generation and unit tests, no robot connection</td><td>Yes</td></tr>
+  <tr><td>2</td><td>Simulation: mock controllers or a simulator</td><td>Yes, for motion logic</td></tr>
+  <tr><td>3</td><td>Real hardware, with an explicit flag and a reviewed program</td><td>No</td></tr>
+</table>
+
+<h2>Platform</h2>
+<ul>
+  <li>Use Ubuntu with its matching ROS 2 release: Humble with Ubuntu 22.04, Jazzy with Ubuntu 24.04.
+      Check the pairing in the ROS 2 documentation for your version.</li>
+  <li>The workbench installer works on Ubuntu: <code>./install.sh --profile coding</code>.</li>
+  <li>Rhino and Grasshopper run on Windows or macOS. Pass poses from them to ROS 2 through a file with
+      stated units, frame and rotation convention.</li>
+</ul>
+
+<h2>Example: a pick-and-place waypoint program</h2>
+<ol class="steps">
+  <li>Ask for the waypoints. The agent writes each pose with its units, frame, rotation convention and tool offset,
+      in the URScript form <code>global WP_n = p[x, y, z, rx, ry, rz]</code>.</li>
+  <li>It builds the ROS 2 package with <code>colcon build</code> and runs the unit tests (Level 1).</li>
+  <li>It runs the program against a simulator and records a <code>ros2 bag</code> (Level 2).</li>
+  <li>You review the bag and the program. Running on the robot is your decision, outside the agent.</li>
+</ol>
+
+<h2>Running several agents</h2>
+<p>Advanced, for scripted runs: work split across several local agents (for example one per package) can use the
+command-line workbench's shared task queue, which escalates a failed job to a larger model
+(<code>python -m lawb queue &lt;folder&gt;</code>).
+Terminal runtimes that host several coding agents, such as Herdr, can run one agent per pane with the same skills.</p>
+
+</div></main>
+<footer><div class="wrap">
+This is a community fork of <a href="https://github.com/aipoch/open-science">AIPOCH Open-Science</a>.
+It is not affiliated with or endorsed by AIPOCH. Source: <a href="https://github.com/libishm1/open-science">libishm1/open-science</a>.
+The app and the skills are research aids. Check every result before you rely on it.
+</div></footer>
+</body>
+</html>
