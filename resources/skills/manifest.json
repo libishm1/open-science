@@ -218,6 +218,48 @@
       "name": "Conversation Handoff",
       "source": "featured",
       "updatedAt": "2026-10-25T00:00:00.000Z"
+    },
+    {
+      "id": "pdf-to-markdown",
+      "name": "PDF to Markdown",
+      "source": "featured",
+      "updatedAt": "2026-10-25T00:00:00.000Z"
+    },
+    {
+      "id": "academic-paper-composer",
+      "name": "Academic Paper Composer",
+      "source": "featured",
+      "updatedAt": "2026-10-25T00:00:00.000Z"
+    },
+    {
+      "id": "academic-paper-strategist",
+      "name": "Academic Paper Strategist",
+      "source": "featured",
+      "updatedAt": "2026-10-25T00:00:00.000Z"
+    },
+    {
+      "id": "tamil-translator",
+      "name": "Tamil Translator",
+      "source": "featured",
+      "updatedAt": "2026-10-25T00:00:00.000Z"
+    },
+    {
+      "id": "lean-verification",
+      "name": "Lean Verification",
+      "source": "featured",
+      "updatedAt": "2026-10-25T00:00:00.000Z"
+    },
+    {
+      "id": "latex-document",
+      "name": "LaTeX Document",
+      "source": "featured",
+      "updatedAt": "2026-10-25T00:00:00.000Z"
+    },
+    {
+      "id": "local-model-setup",
+      "name": "Local Model Setup",
+      "source": "featured",
+      "updatedAt": "2026-10-25T00:00:00.000Z"
     }
   ]
 }

@@ -271,9 +271,11 @@ npmRebuild: false
 # and fetches its feed from <url>. Each installed app uses the default latest channel. macOS
 # builds preserve uniquely named per-arch feed artifacts; release.yml merges them into latest-mac.yml
 # after optional notarization. --publish never means this configuration does not upload anything.
+# Fork: updates come from this fork's GitHub releases, so an installed fork build is never
+# replaced by an upstream build that lacks the fork's bundled skills.
 publish:
-  provider: generic
-  url: https://statics.aipoch.com/open-science/app/stable
-  channel: latest
+  provider: github
+  owner: libishm1
+  repo: open-science
 electronDownload:
   mirror: https://npmmirror.com/mirrors/electron/
