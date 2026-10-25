@@ -12,7 +12,8 @@ license: see repository LICENSE
 1. Ask the user's main task: coding, math, literature, or general.
 2. Ask how much RAM and GPU memory the computer has.
 3. Pick the model from the table below. Use the smaller model if RAM is 8 GB or less.
-4. Give the install command: `ollama pull <model>`.
+4. Most users do not use a terminal: tell them to install the Ollama desktop app, pick the model in its
+   model menu and send one message (it downloads). Offer `ollama pull <model>` only if they ask for a command.
 5. Tell the user to add an Ollama provider in the app (`http://localhost:11434`, no key needed).
 6. Test with one short prompt. If it fails to load, see the troubleshooting table.
 
