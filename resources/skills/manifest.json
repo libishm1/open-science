@@ -212,6 +212,12 @@
       "name": "Robotics ROS 2 UR",
       "source": "featured",
       "updatedAt": "2026-10-24T00:00:00.000Z"
+    },
+    {
+      "id": "conversation-handoff",
+      "name": "Conversation Handoff",
+      "source": "featured",
+      "updatedAt": "2026-10-25T00:00:00.000Z"
     }
   ]
 }
