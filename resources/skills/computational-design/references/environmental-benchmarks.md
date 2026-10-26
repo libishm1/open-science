@@ -10,6 +10,20 @@ invocation: /environmental-simulation
 
 # Environmental Simulation for AEC Computational Design
 
+## Contents
+
+- Line 21: 1. Performance-Driven Design Philosophy
+- Line 115: 2. Daylight Analysis
+- Line 282: 3. Solar Radiation Analysis
+- Line 394: 4. Energy Simulation
+- Line 530: 5. CFD Wind Analysis
+- Line 636: 6. Thermal Comfort
+- Line 728: 7. Acoustic Simulation
+- Line 822: 8. Ladybug Tools Ecosystem
+- Line 951: 9. Simulation Quality Assurance
+- Line 1045: Quick Reference: Simulation Engine Selection
+- Line 1065: Key Formulas Reference
+
 This skill provides a comprehensive reference for environmental performance simulation
 in the Architecture, Engineering, and Construction industry. It covers daylight analysis,
 solar radiation studies, energy modeling, computational fluid dynamics for wind, thermal

@@ -188,6 +188,30 @@
       "name": "Research Synthesis",
       "source": "featured",
       "updatedAt": "2026-10-24T00:00:00.000Z"
+    },
+    {
+      "id": "rhino-mcp-setup",
+      "name": "Rhino MCP Setup",
+      "source": "featured",
+      "updatedAt": "2026-10-24T00:00:00.000Z"
+    },
+    {
+      "id": "rhino-gh-components",
+      "name": "Grasshopper Components",
+      "source": "featured",
+      "updatedAt": "2026-10-24T00:00:00.000Z"
+    },
+    {
+      "id": "rhino-gh-presentation-checks",
+      "name": "Grasshopper Presentation Checks",
+      "source": "featured",
+      "updatedAt": "2026-10-24T00:00:00.000Z"
+    },
+    {
+      "id": "robotics-ros2-ur",
+      "name": "Robotics ROS 2 UR",
+      "source": "featured",
+      "updatedAt": "2026-10-24T00:00:00.000Z"
     }
   ]
 }

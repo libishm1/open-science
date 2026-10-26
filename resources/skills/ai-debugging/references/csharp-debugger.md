@@ -5,6 +5,22 @@ description: This skill should be used when the user is debugging C# / .NET code
 
 # C# Debugger
 
+## Contents
+
+- Line 10: When to use
+- Line 29: When NOT to use
+- Line 35: Sourcing current docs (Context7 + Microsoft Learn)
+- Line 77: Tool ladder
+- Line 130: Workflow
+- Line 213: Async / Task / await diagnostics
+- Line 287: GC and memory diagnostics
+- Line 365: Assembly loading and binding diagnostics
+- Line 413: Net48 + Rhino / Grasshopper plugin debugging
+- Line 498: Common bug patterns
+- Line 535: Quick decision tree
+- Line 562: Logging while you debug
+- Line 573: Verification flags
+
 Procedural guide for debugging C# and .NET code. Covers .NET Framework 4.8 (Windows-only, used for Rhino / Grasshopper plugins) and modern .NET 6+ on Windows / Linux / macOS.
 
 ## When to use

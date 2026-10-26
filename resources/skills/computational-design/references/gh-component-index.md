@@ -1,5 +1,17 @@
 # Grasshopper Patterns Reference
 
+## Contents
+
+- Line 7: 1. Common Definition Patterns
+- Line 340: 2. Data Tree Manipulation Cookbook
+- Line 412: 3. Performance Optimization Strategies
+- Line 444: 4. Custom Component Development
+- Line 514: 5. Cluster Best Practices
+- Line 540: 6. Plugin Integration Patterns
+- Line 605: 7. Debugging Strategies
+- Line 651: 8. Advanced Techniques
+- Line 720: 9. Definition Template Checklist
+
 A comprehensive reference of common Grasshopper definition patterns, data tree manipulation recipes, performance optimization, scripting techniques, plugin integration, and debugging strategies for AEC computational design.
 
 ---
