@@ -52,6 +52,9 @@ def main():
     ap.add_argument("--min-sub", type=int, default=5, help="every (k-1)-sub-combination needs at least this many")
     ap.add_argument("--dims", help="comma-separated dimensions to combine (default: all)")
     ap.add_argument("--recent", type=int, default=2023, help="first year counted as recent")
+    ap.add_argument("--anchor", help="comma-separated levels (level or dimension:level); report only gaps that "
+                    "contain at least one, e.g. the levels where the researcher already has outputs")
+    ap.add_argument("--top", type=int, default=25, help="closure gaps written to the report")
     a = ap.parse_args()
     os.makedirs(a.out, exist_ok=True)
     cfg = json.load(io.open(a.dimensions, encoding="utf-8"))
@@ -111,7 +114,9 @@ def main():
         cw = csv.writer(f); cw.writerow(["combination", "papers", "recent", "weakest_sub_combination"])
         for c, n, r, wk, _, _ in sorted(combos, key=lambda z: (z[1], -z[3])):
             cw.writerow([" x ".join("%s:%s" % k for k in c), n, r, wk])
-    gaps = sorted([z for z in combos if z[1] <= a.max_n and z[3] >= a.min_sub], key=lambda z: -z[3])
+    anchors = {x.strip() for x in a.anchor.split(",")} if a.anchor else set()
+    anchored = lambda c: not anchors or any(k[1] in anchors or "%s:%s" % k in anchors for k in c)
+    gaps = sorted([z for z in combos if z[1] <= a.max_n and z[3] >= a.min_sub and anchored(z[0])], key=lambda z: -z[3])
 
     L = ["# Combination map", "",
          "Corpus: %d papers after scope filter (%d without an abstract, coded on the title only). Coding is by "
@@ -132,7 +137,7 @@ def main():
     L += ["", "## Closure gaps (k = %d): every %d-way sub-combination is studied, the whole is not" % (a.k, a.k - 1), "",
           "A gap needs at most %d paper(s); each sub-combination at least %d. Ranked by the weakest sub-combination."
           % (a.max_n, a.min_sub), ""]
-    for c, n, r, wk, subs, inter in gaps[:25]:
+    for c, n, r, wk, subs, inter in gaps[:a.top]:
         L.append("### %s  (%d papers)" % (" x ".join(k[1] for k in c), n))
         for s, sn in subs:
             members = set.intersection(*(hits[k] for k in s))
