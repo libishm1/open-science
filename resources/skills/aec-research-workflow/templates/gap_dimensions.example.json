@@ -1,0 +1,47 @@
+{
+ "_comment": "Example dimensions for scripts/gap_matrix.py: thermal-storage and adaptive building envelopes under urban and hot climates. Each level is a list of case-insensitive regexes (any match), or {any, all, none}. Copy and replace the dimensions for another field; keep levels specific enough that a paper rarely matches more than two per dimension.",
+ "scope": ["building", "envelope", "wall", "roof", "facade", "façade", "dwelling", "office", "house"],
+ "dimensions": {
+  "technology": {
+   "PCM": ["phase[- ]change material", "\\bPCMs?\\b", "latent heat (thermal )?storage"],
+   "dynamic insulation": ["dynamic insulation", "variable thermal (conductivity|resistance)", "thermal (switch|diode)", "switchable insulation"],
+   "night ventilation": ["night[- ](time )?ventilation", "night cooling", "night flush", "nocturnal (cooling|ventilation)"],
+   "radiative cooling": ["radiative cooling", "sky radiation", "sky cooling"],
+   "thermal mass": ["thermal mass", "thermal inertia", "heavyweight"],
+   "cool or green surfaces": ["cool roof", "reflective (roof|coating|surface)", "green (roof|wall|fa[cç]ade)", "vegetat"]
+  },
+  "control": {
+   "adaptive or switchable": ["adaptive (building )?(envelope|fa[cç]ade|wall|skin)", "switchable", "dynamic (envelope|fa[cç]ade|wall|PCM)", "responsive (envelope|fa[cç]ade)", "movable", "controllable", "kinetic fa[cç]ade", "active (PCM|envelope)"],
+   "predictive or optimal control": ["model predictive control", "\\bMPC\\b", "optimal control", "rule[- ]based control", "reinforcement learning"]
+  },
+  "context": {
+   "urban heat island": ["urban heat island", "\\bUHI\\b", "heat island"],
+   "urban morphology": ["urban (morphology|form|density|geometry|layout|block)", "building density", "sky[- ]view factor", "height[- ]to[- ]width", "local climate zone"],
+   "street canyon or microclimate": ["street canyon", "urban canyon", "urban microclimate", "\\bENVI-?met\\b", "microclimat"],
+   "urban weather coupling": ["urban weather generator", "\\bUWG\\b", "urban building energy model", "\\bUBEM\\b", "co-?simulation.{0,40}urban"]
+  },
+  "climate": {
+   "hot arid": ["hot[- ](arid|dry|desert)", "desert climate", "\\bBWh\\b", "Saudi", "Riyadh", "Arabian", "\\bGCC\\b", "Gulf", "Middle East", "Kuwait", "Qatar", "Emirates", "Egypt", "Iran"],
+   "hot humid or tropical": ["hot[- ]humid", "tropical", "humid subtropical", "monsoon"],
+   "temperate or Mediterranean": ["mediterranean", "temperate", "oceanic"],
+   "cold": ["cold climate", "heating[- ]dominated", "subarctic", "severe cold"],
+   "several climate zones": ["(climate|climatic) zones", "different climates", "several climates", "multiple climates", "K[oö]ppen"],
+   "future climate": ["future (climate|weather)", "climate change scenario", "\\bRCP\\s?\\d", "\\bSSP\\d", "2050", "2080"]
+  },
+  "focus": {
+   "regeneration or solidification": ["solidif", "regenerat", "discharg", "recharg", "re-?solidif", "freez"],
+   "cycling or utilisation": ["cycling", "utili[sz]ation", "charge[- ]discharge", "melting[- ]solidification cycle"],
+   "peak load": ["peak (load|demand|cooling)", "load shift"],
+   "comfort or overheating": ["thermal comfort", "overheating", "operative temperature", "\\bPMV\\b", "discomfort"],
+   "durability or degradation": ["degradation", "durability", "long[- ]term (stability|performance)", "thermal cycling test", "leakage"],
+   "cost or life cycle": ["life[- ]cycle", "\\bLCA\\b", "payback", "cost[- ]effective", "economic"]
+  },
+  "method": {
+   "EnergyPlus or building simulation": ["EnergyPlus", "TRNSYS", "building (energy )?simulation", "DesignBuilder", "IDA ICE"],
+   "CFD": ["\\bCFD\\b", "computational fluid dynamics"],
+   "experiment or monitoring": ["experiment", "test cell", "field (measurement|study|test)", "monitor", "prototype", "full[- ]scale"],
+   "optimisation or machine learning": ["optimi[sz]", "genetic algorithm", "NSGA", "machine learning", "neural network", "surrogate"],
+   "review": ["\\breview\\b", "state of the art", "systematic"]
+  }
+ }
+}

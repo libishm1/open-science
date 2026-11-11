@@ -56,6 +56,8 @@ explicit **research-gap paragraph** that names the intersection nobody has occup
 
 ### A9. Split sentences that carry more than one job
 A 65-word sentence carrying a formula, its meaning, its source and a caveat becomes two or three.
+An editor's "more straightforward grammar would increase readability", when the reviewers found the English
+fine, is this comment: measure sentence length and split ([revision-and-response.md](revision-and-response.md), section 7).
 
 ### A10. Say plainly when no experiment was performed
 State it once, early, in the methods. It pre-empts the entire Axis-B "validation" thread.

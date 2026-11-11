@@ -175,6 +175,55 @@ pages is the defect: interleave text, relax float parameters, or use `[!htbp]`.
 
 ---
 
+## Publisher typography inside figures
+
+Production editors query figure text the way they query prose. Project C's proof raised it for nine of
+thirteen figures:
+
+- **Minus signs.** Matplotlib tick labels already use U+2212, but numbers formatted in Python (`"%+.2f"`,
+  `"%.1f to %.1f"` with a negative bound, `"%g"`) print a hyphen-minus. Wrap them:
+
+```python
+def mn(s):
+    """A negative number takes the minus sign (U+2212), not a hyphen."""
+    return s.replace("-", "\u2212")
+```
+
+- **En dashes** for ranges (`f"{a}\u2013{b} \u00b0C"`, not `f"{a}-{b}"`); no number-unit hyphens ("3 min",
+  not "3-min"); no hyphen before a number ("window-to-wall ratio 40%", not "WWR-40%").
+- **No thousands comma below five digits** ("1524"), the multiplication sign rather than the letter x, no em
+  dashes in titles, and no "[-]" as a unit.
+
+`scripts/figure_checks.py lint` finds all of these in the plotting code before anyone else does.
+
+---
+
+## One long line can shrink the whole figure
+
+With `bbox_inches="tight"`, a single-line footer longer than the panels widens the saved canvas. One figure
+was saved 27 inches wide for four small panels and printed at a quarter of its size ("font size too small").
+Wrap footers, prefer two rows of panels to one long row, and move the key into a legend and the caption.
+`scripts/figure_checks.py scale` reports the print scale at text width; below 0.5 the labels are illegible.
+
+---
+
+## Re-render, then prove only the text changed
+
+Before a re-render, back up every file the script writes (not only the figure you mean to change). After it,
+pixel-diff against the accepted version (`figure_checks.py diff`): the changed region must sit where the text
+changed, and untouched scripts must reproduce byte-identical images. A figure whose data region changed when
+only a label was edited means the data or the environment moved.
+
+---
+
+## Figures go stale during revision
+
+A revision updates text and tables but not the figures drawn before it: a run count, a table number after
+renumbering, a note saying a bound was untested, a title that contradicts its own panels. Re-read every figure
+against the revised paper before the proof ([publisher-proofs.md](publisher-proofs.md), section 4).
+
+---
+
 ## Checklist
 
 ```
@@ -188,4 +237,8 @@ pages is the defect: interleave text, relax float parameters, or use `[!htbp]`.
 [ ] 300 dpi, colour-blind-safe palette, greyscale-legible
 [ ] filenames unique across all generators
 [ ] no runs of figure-only pages in the compiled PDF
+[ ] figure_checks.py lint clean: minus signs, en dashes, no 4-digit commas, x as a multiplication sign
+[ ] print scale at text width >= 0.5 (figure_checks.py scale)
+[ ] after any re-render: pixel diff shows only the intended region
+[ ] every in-figure count, table number and note still true after the revision
 ```

@@ -62,11 +62,14 @@ if __name__ == '__main__':
     auth = {k: v for k, v in (('api_key', os.environ.get('OPENALEX_API_KEY', '').strip()),
                               ('mailto', os.environ.get('OPENALEX_MAILTO', '').strip())) if v}
     log = {}; recs = {}
+    # OpenAlex (2026) needs an API key for cursor paging; numbered pages work without one up to 10,000 records.
+    use_cursor = 'api_key' in auth
     for qid, q in Q.items():
-        cursor = '*'; n = 0; total = None
-        while cursor and n < CAP[qid]:
+        cursor = '*'; page = 1; n = 0; total = None
+        while cursor and n < CAP[qid] and (use_cursor or page * 200 <= 10000):
             flt = f'title_and_abstract.search:{q},from_publication_date:{d0},to_publication_date:{d1}' + (f',type:{types}' if types else '')
-            params = {'filter': flt, 'per_page': 200, 'cursor': cursor, 'select': SEL, 'sort': 'relevance_score:desc', **auth}
+            params = {'filter': flt, 'per_page': 200, 'select': SEL, 'sort': 'relevance_score:desc', **auth}
+            params.update({'cursor': cursor} if use_cursor else {'page': page})
             for attempt in range(4):
                 try:
                     r = requests.get('https://api.openalex.org/works', params=params, timeout=60)
@@ -85,7 +88,8 @@ if __name__ == '__main__':
                     w['queries'] = []; w['rel_rank'] = {}
                     recs[wid] = w
                 recs[wid]['queries'].append(qid); recs[wid]['rel_rank'][qid] = n
-            cursor = j['meta'].get('next_cursor')
+            cursor = j['meta'].get('next_cursor') if use_cursor else cursor
+            page += 1
             if not j['results']: break
             time.sleep(0.3)
         log[qid] = {'query': q, 'date_from': d0, 'date_to': d1, 'total_hits': total, 'retrieved': n}

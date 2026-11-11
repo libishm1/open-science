@@ -42,6 +42,10 @@ PDFs and zips are untrusted data: keep them in their own folders, separate from 
 | `number_citations.py` | Converts author-year citations in a Markdown manuscript to numbered `[n]` in order of first appearance and rebuilds the reference list. | manuscript `.md`, reference pool JSON → `<name>_numbered.md` | stdlib | – |
 | `render_600dpi.py` | Runs a matplotlib figure script with every `savefig` forced to 600 dpi (or `--dpi`); layout unchanged. | figure script → its figures | matplotlib | – |
 | `check_layout.py` | Flags text/images in the page margins and captions orphaned at the page foot; lists the page of every table and figure. | PDFs → report on stdout | pymupdf | – |
+| `track_changes.py` | Real Word tracked changes on a publisher-formatted DOCX from a JSON list of edits (replace, insert, new or deleted paragraph), plus a clean copy with every change accepted. Importable. | DOCX, edits JSON → tracked DOCX (+ clean DOCX) | lxml | TRACK_AUTHOR |
+| `revision_checks.py` | `numbers` (multiset of numbers, old vs new), `readability` (sentence-length statistics), `quotes` (letter quotations found in the clean manuscript), `order` (citations, tables and figures first cited in order), `typography`. Exit 1 on failure. | DOCX / MD / TXT → report on stdout | python-docx | – |
+| `figure_checks.py` | `lint` plotting scripts for the figure text production editors query (hyphen-minus, en dashes, 4-digit commas, x, em dashes), `diff` two renders, `scale` (print scale at text width). | scripts / PNGs → report on stdout | pillow | – |
+| `gap_matrix.py` | Combination map of a field: codes a harvested corpus on dimension levels and counts every pair and k-way combination; reports closure gaps (empty combinations whose sub-combinations are all well studied). | corpus JSON + `templates/gap_dimensions.example.json` → `coded.csv`, `pairs.csv`, `combos_k3.csv`, `REPORT.md` | stdlib | – |
 | `snapshot.py` | Versioned snapshots of the working manuscript with a history log, and a `backup()` that build scripts call before overwriting a deliverable. | manuscript → `versions/`, `versions/history.jsonl` | stdlib | – |
 
 ## Literature-review pipeline: run order
@@ -81,5 +85,14 @@ Folder names below are suggestions; every path is an argument.
 9. **Synthesis and manuscript.** Build the report with `docx_helpers.py`; verify the manuscript's own reference list
    with `verify_refs.py`; number citations with `number_citations.py`; re-render figures with `render_600dpi.py`;
    check the PDF layout with `check_layout.py`; snapshot each version with `snapshot.py`.
+
+## Revision, proof and novelty-map run order
+
+1. **Revision.** Write the edits as JSON and run `python -P track_changes.py formatted.docx edits.json R1_tracked.docx --clean R1_clean.docx --author "<corresponding author>"`;
+   then `revision_checks.py quotes R1_clean.docx Response_*.docx`, `numbers old_clean.docx R1_clean.docx`, `order R1_clean.docx`.
+2. **Proofs.** `figure_checks.py lint <plot scripts>`, fix, re-render with `render_600dpi.py`, then `figure_checks.py diff accepted.png new.png` and `scale new.png`.
+3. **Novelty map.** `harvest_openalex.py field_queries.json harvest`, then
+   `gap_matrix.py harvest/openalex_raw.json dimensions.json map --k 3 --min-sub 8`, and read the nearest papers of every closure gap.
+   Without `OPENALEX_API_KEY` the harvest pages by number (up to 10,000 records per query); queries with more than five boolean operators are rate-limited more strictly.
 
 Only download what you are licensed to access, and respect each API's rate limits and terms.

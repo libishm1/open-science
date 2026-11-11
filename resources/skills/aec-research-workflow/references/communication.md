@@ -11,6 +11,14 @@ Nearly every research task ends with a message, an email or a script for a super
 - Pair the message with the files to attach and their absolute paths. A typical package: one zip in a `Share_WhatsApp/` folder plus the message text.
 - When a decision is needed, end with the specific decisions as a short numbered list.
 
+## Review and production replies
+
+- "Is it major?": one line per reviewer (workload and risk), one line overall, then the plan.
+- For a portal: the reply text ready to paste for each query, first person, addressed to the editor, plus the
+  edit to make; a two- or three-sentence version of any long answer.
+- Before adding a table or figure to a response letter, ask: an exhibit the reviewer did not request invites a
+  request to put it in the paper.
+
 ## Emails
 
 - Short (about 100 to 150 words), with a list of what to attach and where each file is.

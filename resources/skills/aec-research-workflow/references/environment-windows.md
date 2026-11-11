@@ -30,12 +30,17 @@ For a university-managed Windows 11 PC with no administrator rights, endpoint an
 - Never put secrets, `.env`, `node_modules`, Lean or Mathlib caches, or build staging inside OneDrive.
 - OneDrive locks folders mid-delete (`shutil.rmtree` → WinError 5). Stage builds and packages outside it.
 - Moving a file over a synced shared document breaks its share link. Write in place.
+- `Copy-Item` of a whole folder of large files inside OneDrive can stall for minutes (on-demand files download
+  first). Back up only the files that will change, one by one.
 
 ## Documents
 
 - Check for pandoc, LibreOffice and poppler before assuming them. MiKTeX ships `pdftoppm`.
 - PDF → Markdown: `pymupdf4llm`; page renders for visual checks: PyMuPDF. Edit docx with python-docx.
 - Word and Excel through COM from PowerShell: `SaveAs2` format 16 (docx) or 17 (pdf); Excel `CalculateFull` to recalculate formulas. Kill windowless WINWORD after each render, force-embed images (`BreakLink`), and test COM on a trivial document first because it can hang.
+- Word COM PDF export: `$d.ExportAsFixedFormat($out, 17)`; `$d.ComputeStatistics(2)` gives the page count.
+- Pillow refuses images above about 89 megapixels (a 600 dpi figure 25 inches wide); set
+  `Image.MAX_IMAGE_PIXELS = None` for your own renders, and treat the size as a sign the figure is too wide.
 - pandoc moves `\begin{abstract}` into the title block, so affiliations can land after the abstract; post-process the docx.
 
 ## LaTeX and Lean

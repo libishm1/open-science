@@ -23,6 +23,19 @@ The protocol for EnergyPlus-based studies (PCM envelopes, adaptive façades, urb
 9. **Report and review.** Write a data-driven experiment report (docx), run a multi-agent journal-reviewer review (about four agents, recomputing from raw data), apply fixes and save a new version. See [manuscript-engineering.md](manuscript-engineering.md).
 10. **Package and hand off.** Build the reproducibility package (see [manuscript/reproducibility-and-packaging.md](manuscript/reproducibility-and-packaging.md)) and update `HANDOFF.md`.
 
+## Checks that reviewers ask for, and how to run them
+
+- **Independence:** case-months share weather and model; report grouped cross-validation (leave one case out,
+  leave one city out) next to leave-one-out.
+- **Screening choices:** thresholds and bin widths re-run at alternative values; say which conclusions hold in
+  every combination.
+- **Attribution under control:** inert controls must run the same control; if they switch differently, the
+  share is the contribution of the material and its interaction with the control.
+- **Weather sensitivity:** simulate shifted weather directly (shift in the window of interest, linear tapers,
+  dew point capped at dry bulb, sky infrared scaled with T^4); re-classifying is not a test.
+- **Predictions first:** write the expected outcome into the run script before the runs. Details:
+  [manuscript/revision-and-response.md](manuscript/revision-and-response.md), section 5.
+
 ## Convergence and uncertainty
 
 - Vary timestep and mesh **separately**: CondFD silently resets a timestep below 20 per hour to 20, and its node spacing depends on the timestep.
@@ -39,6 +52,10 @@ The protocol for EnergyPlus-based studies (PCM envelopes, adaptive façades, urb
 - The default ground temperature (18 °C) acts as a heat sink; use Kiva for ground contact.
 - Windows must face out of the room; adiabatic floors need an explicit construction and the Floor surface type.
 - Check constants such as reference floor area against the model, not against the brief.
+- An EMS-switched layer with the same diffusivity but a different density adds or removes sensible heat at every
+  switch. Quantify it with an inert-property run and state the direction of the bias.
+- Manufacturer PCM data sheets quote heat storage capacity (latent plus sensible over about 15 K), not latent
+  heat; read the definition on the sheet, and compare its hysteresis with the model's.
 
 ## Weather-file traps
 

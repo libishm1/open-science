@@ -62,15 +62,23 @@ SUPERVISOR_ROUND_1 = [
 
 ## Revision after peer review
 
-1. Parse the decision letter into a plan of action.
+Full procedure: [manuscript/revision-and-response.md](manuscript/revision-and-response.md). In short:
+
+1. Parse the decision letter into a plan of action; classify each reviewer by workload and by risk.
 2. Add analyses **additively**: frozen results stay untouched, and every new script first asserts it reproduces them.
 3. Write the response letter in a non-defensive tone, plus the highlighted manuscript (latexdiff without bibliography noise, or Word with changes highlighted).
 4. Split the response into per-reviewer files plus an editor response when the portal requires it, and produce the portal's Word upload from the canonical DOCX after every rebuild.
 5. When reviewers say a paper "reads as an experimental report", change the claim (for example to a quantified validity envelope), not just the wording.
+6. When the journal returns its formatted DOCX, mark the revision on that file with real tracked changes; keep every changed sentence in one source that both the manuscript and the letters quote, and check the quotes.
+7. No response-only tables or figures unless the reviewer asked for that exhibit.
+
+## After acceptance: proofs
+
+Production queries are typography, figures, tables, references and files. Lint and re-render the figures, pixel-diff them against the accepted versions, re-read every figure against the revised text, and hand the supervisor a reply guide in proof order. See [manuscript/publisher-proofs.md](manuscript/publisher-proofs.md).
 
 ## After rejection
 
-Diagnose the novelty failure. Mine the last ~100 related papers for stated limitations and future work, with forward and backward citation tracking, and list paywalled papers to request. Re-anchor the novelty on a specific prior claim the results contradict, propose a new dimension, run a small pilot, and get approval before extending. Archive removed content verbatim in a `FUTURE_PAPER_<topic>.md` file to seed a later paper.
+Read what the editor saw first and which desk-rejection trigger it was ([manuscript/editorial-decisions-and-novelty.md](manuscript/editorial-decisions-and-novelty.md)); map the field's combinations to find a counted gap before rewriting. Diagnose the novelty failure. Mine the last ~100 related papers for stated limitations and future work, with forward and backward citation tracking, and list paywalled papers to request. Re-anchor the novelty on a specific prior claim the results contradict, propose a new dimension, run a small pilot, and get approval before extending. Archive removed content verbatim in a `FUTURE_PAPER_<topic>.md` file to seed a later paper.
 
 ## Document-engineering rules
 
