@@ -121,3 +121,6 @@ blob-report/
 
 # Local scratch files
 tmp/
+
+# Bundled skills may ship a local/ folder (humanizer/local is its small-model runner)
+!resources/skills/*/local/

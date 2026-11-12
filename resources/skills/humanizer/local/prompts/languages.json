@@ -1,0 +1,5 @@
+{
+ "English": "",
+ "Arabic": "Write Modern Standard Arabic in a formal, academic register, as an Arab expert in the field would write it. Use Arabic word order rather than English word order. Use the Arabic comma ، and question mark ؟. Keep names of software, standards and units in Latin script.",
+ "Tamil": "Write formal written Tamil as used in academic writing in Tamil Nadu (எழுத்துத் தமிழ்), never spoken or colloquial forms. Use correct spelling and sandhi (புணர்ச்சி). Keep the author's word choices: do not replace Sanskrit-derived words with pure Tamil words or the reverse. Write every number in Western digits exactly as in the source; a Tamil case or ordinal suffix may follow a number. Use the full stop and comma, never ।. For a technical term, give the Tamil term with the English term in brackets at first mention, then the Tamil term; keep names of software, standards and units in Latin script."
+}

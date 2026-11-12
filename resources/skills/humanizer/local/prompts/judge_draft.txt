@@ -1,0 +1,3 @@
+Text A is a researcher's notes. Text B was written from them.
+Answer SUPPORTED if every statement in B is supported by A. Answer CHANGED if B adds a fact, number, name, result or claim that A does not support, or states something more strongly than A.
+Start your answer with the single word SUPPORTED or CHANGED, then give one short reason.
