@@ -20,6 +20,11 @@ class Fake(http.server.BaseHTTPRequestHandler):
         self.send_response(200); self.send_header("Content-Type", "application/json")
         self.send_header("Content-Length", str(len(out))); self.end_headers(); self.wfile.write(out)
 
+    def do_GET(self):                                # Ollama's model list, for --model auto
+        out = json.dumps({"models": [{"name": n} for n in REPLY.get("tags", [])]}).encode("utf-8")
+        self.send_response(200); self.send_header("Content-Length", str(len(out))); self.end_headers()
+        self.wfile.write(out)
+
     def log_message(self, *a):
         pass
 
@@ -216,6 +221,19 @@ class Pipeline(Base):
         entry = msg[0]["content"][0]
         self.assertEqual((entry["type"], entry["source_lang_code"], entry["target_lang_code"]), ("text", "en", "ta"))
         self.assertEqual(code, 0)
+
+    def test_model_auto_picks_by_language(self):
+        REPLY["tags"] = ["qwen3:4b", "gemma3:4b", "nomic-embed-text:latest"]
+        self.assertEqual(H.pick_model(self.url, "proofread", ["English"]), "qwen3:4b")
+        self.assertEqual(H.pick_model(self.url, "translate", ["English", "Tamil"]), "gemma3:4b")
+        REPLY["tags"] = ["llama3.2:3b"]
+        with self.assertRaises(RuntimeError) as e:
+            H.pick_model(self.url, "flag", ["Arabic"])
+        self.assertIn("ollama pull gemma3:4b", str(e.exception))
+        REPLY["tags"] = ["qwen3:4b"]
+        REPLY["fn"] = lambda s, u: "SAME" if judge(s) else payload(u).replace("/no_think", "")
+        code, out, audit = self.run_tool("proofread", "It works well.\n", "--model", "auto")
+        self.assertEqual(audit["model"], "qwen3:4b"); self.assertTrue(audit["settings"]["no_think"])
 
     def test_tamil_target_rejects_latin_output(self):
         hard, _ = H.check("translate", "The wall saved 4.3%.", "The wall saved 4.3%.", 0, False, (), "Tamil", True)

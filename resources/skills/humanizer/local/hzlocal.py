@@ -290,6 +290,29 @@ class Model:
         raise RuntimeError("model server error at %s: %s" % (self.url, err))
 
 
+# Preference order for --model auto (Ollama tags), from the evaluations summarised in local/README.md.
+AUTO = {"english": ["qwen3:4b-instruct", "qwen3:4b", "qwen3:8b", "gemma3:4b", "gemma3:12b"],
+        "other": ["gemma3:4b-it-q8_0", "gemma3:4b", "gemma3:12b-it-q8_0", "gemma3:12b"]}
+
+
+def pick_model(base_url, task, langs, timeout=10):
+    """Choose an installed Ollama model: Qwen3 for English-only work, Gemma 3 when Arabic, Tamil or another
+    language is involved. Raises with the `ollama pull` command to run when none is installed."""
+    root = re.sub(r"/v1/?$", "", base_url.rstrip("/"))
+    try:
+        with urllib.request.urlopen(root + "/api/tags", timeout=timeout) as f:
+            names = [x["name"] for x in json.loads(f.read().decode("utf-8")).get("models", [])]
+    except (urllib.error.URLError, TimeoutError, ValueError, KeyError) as e:
+        raise RuntimeError("--model auto needs Ollama at %s (%s). Start Ollama, or give --model." % (root, e))
+    key = "english" if all(l.lower().startswith("english") for l in langs) else "other"
+    for want in AUTO[key]:
+        hit = [n for n in names if n == want or n.startswith(want + "-") or n == want + ":latest"]
+        if hit:
+            return sorted(hit)[0]
+    raise RuntimeError("no suitable model installed in Ollama for this task; run: ollama pull %s"
+                       % ("qwen3:4b" if key == "english" else "gemma3:4b"))
+
+
 def load_prompt(name):
     with open(os.path.join(PROMPTS, name + ".txt"), encoding="utf-8") as f:
         return f.read().strip()
@@ -474,7 +497,8 @@ def main(argv=None):
     ap.add_argument("input"); ap.add_argument("-o", "--output", required=True)
     ap.add_argument("--base-url", default=os.environ.get("HZ_BASE_URL", "http://localhost:11434/v1"),
                     help="OpenAI-compatible endpoint (default: Ollama on this computer)")
-    ap.add_argument("--model", default=os.environ.get("HZ_MODEL", "qwen3:4b"))
+    ap.add_argument("--model", default=os.environ.get("HZ_MODEL", "qwen3:4b"),
+                    help="model name, or auto: pick an installed Ollama model for the task and language")
     ap.add_argument("--api-key-env", default="HZ_API_KEY", help="name of the environment variable holding a key")
     ap.add_argument("--judge-model", help="a different model for the meaning check (same server)")
     ap.add_argument("--source", default="English"); ap.add_argument("--target", default="English")
@@ -516,6 +540,11 @@ def main(argv=None):
             if "\t" in line:
                 s, t = line.rstrip("\n").split("\t", 1); gloss.append((s.strip(), t.strip()))
     key = os.environ.get(a.api_key_env, "")
+    if a.model == "auto":
+        langs = [a.source, a.target] if a.task == "translate" else [a.lang]
+        a.model = pick_model(a.base_url, a.task, langs)
+        a.no_think = a.no_think or a.model.startswith("qwen3")
+        print("model: %s" % a.model, file=sys.stderr)
     m = Model(a.base_url, a.model, key, max_tokens=a.max_tokens, no_think=a.no_think)
     ctx = {"protect": protect + [s for s, _ in gloss] if a.task != "translate" else protect,
            "system": {t: load_prompt(t) for t in ("proofread", "humanize", "translate", "draft", "flag")},

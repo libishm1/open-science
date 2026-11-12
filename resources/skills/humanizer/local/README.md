@@ -30,9 +30,27 @@ python hzlocal.py flag kattrai.md -o kattrai.review.md --lang Tamil --model <mod
 python hzlocal.py draft notes.md -o section.md --genre "results section of a journal article" --model <model>
 ```
 
-Add `--base-url` for a server other than Ollama, and `--no-think` for models with a reasoning mode such as Qwen3.
-For a hosted model, put the key in an environment variable (`HZ_API_KEY` by default) and give the provider's
-OpenAI-compatible base URL. Nothing is sent anywhere except the URLs you give.
+With Ollama, `--model auto` picks an installed model for the task and language (Qwen3 4B for English-only work,
+Gemma 3 4B when Arabic, Tamil or another language is involved) and turns off Qwen3's reasoning mode; it tells you
+which `ollama pull` to run when neither is installed. Otherwise add `--base-url` for a server other than Ollama, and
+`--no-think` for models with a reasoning mode such as Qwen3. For a hosted model, put the key in an environment
+variable (`HZ_API_KEY` by default) and give the provider's OpenAI-compatible base URL. Nothing is sent anywhere
+except the URLs you give.
+
+## Using it from an agent
+
+The skill is a plain `SKILL.md` folder. Copy the whole `humanizer` folder, including `local/`, to the agent's skills
+folder; the agent can then run `hzlocal.py` for you.
+
+| Agent | User-level skills folder | Project skills folder |
+|---|---|---|
+| Codex | `~/.agents/skills/humanizer/` | `.agents/skills/humanizer/` |
+| Antigravity (app, IDE, CLI) | `~/.gemini/config/skills/humanizer/` | `.agents/skills/humanizer/` |
+| Claude Code | `~/.claude/skills/humanizer/` | `.claude/skills/humanizer/` |
+
+To keep the writing on your own computer whatever agent runs the skill, add a short rule at the top of your copy of
+`SKILL.md`: always run `local/hzlocal.py --model auto` against Ollama, report the audit, and never rewrite or send
+the text elsewhere. Without an agent, run `hzlocal.py` yourself; the model in Ollama does the writing either way.
 
 ## Models
 
@@ -157,7 +175,7 @@ the model's list of suspected errors; nothing is rewritten.
 python -m unittest discover -s tests -v
 ```
 
-Nineteen tests run against a fake OpenAI-compatible server, so no model weights are needed. They cover masking, the
+Twenty tests run against a fake OpenAI-compatible server, so no model weights are needed. They cover masking, the
 checks, repair, keeping the original, escalation, Arabic and Tamil translation with back-translation, visible and
-changed numbers, Arabic finishing, the glossary, the TranslateGemma message format, Tamil proofreading, `flag`, and
-drafting with an invented number.
+changed numbers, Arabic finishing, the glossary, the TranslateGemma message format, Tamil proofreading, `flag`,
+`--model auto`, and drafting with an invented number.
