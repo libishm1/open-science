@@ -212,6 +212,12 @@
       "name": "Robotics ROS 2 UR",
       "source": "featured",
       "updatedAt": "2026-10-24T00:00:00.000Z"
+    },
+    {
+      "id": "humanizer",
+      "name": "Humanizer",
+      "source": "featured",
+      "updatedAt": "2026-11-12T00:00:00.000Z"
     }
   ]
 }

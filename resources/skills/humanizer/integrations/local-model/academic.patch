@@ -1,0 +1,318 @@
+diff --git a/README.md b/README.md
+index 3bf2ab9..3ae7a08 100644
+--- a/README.md
++++ b/README.md
+@@ -366,3 +366,7 @@ humanizer is fine-tuned from [google/gemma-4-12B](https://huggingface.co/google/
+ This repository was previously `sgaofen/humanizer`, and the model repository was previously `jialinyyzz/humanizer-gemma-4-e4b` (an earlier, smaller model that is no longer offered; its files are in the Hugging Face commit history). The first 12B release (v1, 2026-10-01) is also in the commit history; the current model is v2 (2026-10-02).
+ 
+ Links: [Hugging Face](https://huggingface.co/jialinyyzz/humanizer) · [App releases](https://github.com/sgaofen/humanizer-local-model/releases/latest) · [Install guide](docs/INSTALL.md) · [AGENTS.md](AGENTS.md) · [llms.txt](llms.txt)
++
++## Academic review integration
++
++An optional [academic mode](docs/ACADEMIC.md) adds conservative scientific change checks, original-text fallback and a candidate audit trail. It preserves the exact trained prompt. Profile names label review context; they do not condition the model or guarantee detector outcomes.
+diff --git a/docs/ACADEMIC.md b/docs/ACADEMIC.md
+new file mode 100644
+index 0000000..8ce8dda
+--- /dev/null
++++ b/docs/ACADEMIC.md
+@@ -0,0 +1,27 @@
++# Academic review mode
++
++This optional mode adds conservative checks and a candidate audit trail. It keeps the model's trained prompt and sampling unchanged. It does not train a journal-specific model, prove semantic equivalence, certify publication readiness, or promise any detector result.
++
++```bash
++hz paper.md --academic results-in-engineering --json --quiet -o paper.review.md > paper.audit.json
++```
++
++The `--academic` choices are `general`, `nature`, `applied-sciences`, `results-in-engineering`, `caadria`, `clinical`, `materials`, `buildings`, `sustainability`, and `automation-in-construction`. They label the review context in the report; the current automatic checks are the same for all profiles. Choose actual venue and section instructions during human editing. No profile text is injected into the completion prompt.
++
++Supply exact technical names, symbols or phrases using a UTF-8 file, one per line:
++
++```bash
++hz paper.md --academic caadria --protect-file terms.txt --json -o paper.review.md > paper.audit.json
++```
++
++The checks compare occurrences of numbers, recognized adjacent units, bracketed numeric/LaTeX/parenthesized year citations, inline math/code, selected English uncertainty/negation/causal/directional words, and user-protected phrases. They also use existing `hz` checks. Academic mode allows copying: accurate terminology or an already clear sentence need not be paraphrased. It retries any flagged candidate up to `--retries`; if no candidate passes, it keeps the original piece.
++
++Exit 4 means at least one original piece was retained because all candidates triggered checks. Output and JSON are still written. Exit 0 means no automatic alarms, **not** that the science is verified. `--json` is required so the audit can be retained. Save redirected stdout even for exit 4. Existing exit codes 1–3 retain their meaning.
++
++The report contains source and candidate passages, hashes, reasons, selected attempt, profile, sampling and a `review_required` marker. These passages may contain unpublished material; keep the report with the manuscript. The audit contains the final completion of each main attempt, not intermediate language-resampling outputs. The upstream backend reports the model filename; record a model-weight checksum separately for reproducible experiments.
++
++Limitations: regex checks miss many units, formulas, citation styles and meaning changes. They are mainly designed for English; they do not validate Chinese claim scope. Counts cannot ensure that a number or citation remains attached to the correct claim. Legitimate synonyms may trigger fallback. Names need explicit protection. Whole-document consistency and method–code alignment require separate review. DOCX formatting limitations of `hz` still apply.
++
++Review quantities in context, endpoints, comparator definitions, negation, uncertainty, citations and table consistency. Follow current venue disclosure requirements. The original model prompt asks to cut hedging, which is why scientific uncertainty needs explicit checking; these alarms cannot fully resolve that mismatch.
++
++Tests use fake completion servers. No real-model quality or detector benchmark was run for this feature.
+diff --git a/humanizer/academic.py b/humanizer/academic.py
+new file mode 100644
+index 0000000..d5f8d92
+--- /dev/null
++++ b/humanizer/academic.py
+@@ -0,0 +1,44 @@
++"""Conservative change alarms for academic prose; not a semantic verifier."""
++from collections import Counter
++import hashlib
++import re
++
++PROFILES = (
++    'general', 'nature', 'applied-sciences', 'results-in-engineering',
++    'caadria', 'clinical', 'materials', 'buildings', 'sustainability',
++    'automation-in-construction',
++)
++
++# Match amounts with their adjacent units. Exact comparison deliberately also
++# flags harmless notation changes, which a researcher can review separately.
++NUMBER = r'(?<![\w.])[+−-]?(?:\d+(?:[,.]\d+)*|\.\d+)(?:[eE][+−-]?\d+)?'
++UNIT = r'(?:%|°\s?[CF]|MPa|GPa|kPa|Pa|mm|cm|km|m|ms|s|Hz|kHz|kg|mg|g|mL|L|K|N|W)(?![A-Za-z])'
++PATTERNS = {
++    'numbers': re.compile(NUMBER),
++    'quantities': re.compile(NUMBER + r'\s*' + UNIT),
++    'citations': re.compile(r'\[\d+(?:\s*[,;–-]\s*\d+)*\]|\\(?:cite\w*|ref|eqref)\*?(?:\[[^\]]*\])*\{[^}]+\}|\([^()\n]*\b(?:19|20)\d{2}[a-z]?[^()\n]*\)'),
++    'math': re.compile(r'(?<!\$)\$(?!\$)[^$\n]+\$(?!\$)|\\\([^\n]*?\\\)'),
++    'code': re.compile(r'`[^`\n]+`'),
++    'claim_cues': re.compile(r"\b(?:may|might|could|suggest\w*|associat\w*|correlat\w*|caus\w*|prov\w*|significant\w*|not|no|never|without|cannot|increase\w*|decrease\w*|higher|lower|equivalent|noninferior|non-inferior)\b|\b\w+n['’]t\b", re.I),
++}
++
++
++def changes(draft, candidate, protected=()):
++    """Return alarms in either direction. Absence of alarms is not approval."""
++    issues = []
++    for label, pattern in PATTERNS.items():
++        def tokens(text):
++            return Counter(re.sub(r'\s+', ' ', m.group()).lower()
++                           if label == 'claim_cues' else re.sub(r'\s+', ' ', m.group())
++                           for m in pattern.finditer(text))
++        if tokens(draft) != tokens(candidate):
++            issues.append('academic_' + label)
++    for phrase in protected:
++        if draft.count(phrase) != candidate.count(phrase):
++            issues.append('academic_protected')
++            break
++    return issues
++
++
++def digest(text):
++    return hashlib.sha256(text.encode('utf-8')).hexdigest()
+diff --git a/humanizer/hz.py b/humanizer/hz.py
+index 98fb267..088ec70 100644
+--- a/humanizer/hz.py
++++ b/humanizer/hz.py
+@@ -30,10 +30,12 @@ from typing import Callable, Dict, List, Optional, Tuple
+ 
+ try:
+     from . import hz_text as T
++    from . import academic as A
+     from . import __version__
+ except ImportError:  # python3 humanizer/hz.py
+     sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+     import hz_text as T  # type: ignore
++    import academic as A  # type: ignore
+     __version__ = '0.1.0'
+ 
+ # ── the prompt: byte for byte what the model was trained on (humanizer/promptfmt.py) ──────────────
+@@ -466,7 +468,8 @@ def _describe(issues: List[str], copy: float, missing_numbers: List[str], missin
+ 
+ 
+ def rewrite_units(units: List[T.Unit], backend: Backend, sizer: T.Sizer, out: Out, where: Callable[[T.Unit], str],
+-                  max_copy: float = 0.5, retries: int = 1, loc_key: str = "line") -> Tuple[Dict[int, str], List[dict]]:
++                  max_copy: float = 0.5, retries: int = 1, loc_key: str = "line",
++                  academic: Optional[str] = None, protected=()) -> Tuple[Dict[int, str], List[dict]]:
+     """Rewrite each unit; if the rewrite has a problem, rewrite it again (up to `retries` more times)
+     and keep the version with the fewest problems."""
+     results: Dict[int, str] = {}
+@@ -489,16 +492,25 @@ def rewrite_units(units: List[T.Unit], backend: Backend, sizer: T.Sizer, out: Ou
+                 text, cut = backend.complete(prompt, n_pred)
+                 text = text.strip()
+             secs = time.time() - t0
+-            c = T.check(u.text, text, cut, max_copy, sizer)
++            c = T.check(u.text, text, cut, 1.0 if academic else max_copy, sizer)
++            if academic:
++                c.issues.extend(A.changes(u.text, text, protected))
+             tries.append((text, c, secs, lang))
+             head = f"{where(u)}, {T.size_label(u.text)}" if a == 0 else f"try {a + 1}"
+             out.info(f"[{k}/{total}] {head}: {secs:.1f} s, copy {c.copy:.2f}"
+                      + (f"  ({_describe(c.issues, c.copy, c.missing_numbers, c.missing_urls, c.added_numbers)})"
+                         if c.issues else ""))
+-            if not c.retry:
++            if not (bool(c.issues) if academic else c.retry):
+                 break
+-        best = min(range(len(tries)), key=lambda i: tries[i][1].score())
++        best = min(range(len(tries)), key=lambda i: (
++            (bool(tries[i][1].issues), len(tries[i][1].issues), i)
++            if academic else tries[i][1].score()))
+         text, c = tries[best][0], tries[best][1]
++        restored = bool(academic and c.issues)
++        if restored:
++            text = u.text
++            out.warn(f"{where(u)}: kept original; academic checks rejected all candidates: "
++                     + ', '.join(c.issues))
+         if len(tries) > 1:
+             out.info(f"[{k}/{total}] kept try {best + 1}")
+         results[u.id] = text
+@@ -515,6 +527,15 @@ def rewrite_units(units: List[T.Unit], backend: Backend, sizer: T.Sizer, out: Ou
+                           "seconds": round(t[2], 1), "language_resampled": t[3]} for t in tries],
+             "draft_start": u.text[:60],
+         })
++        if academic:
++            stats[-1]['academic'] = {
++                'profile': academic, 'restored_original': restored,
++                'status': 'original_retained' if restored else 'needs_human_review',
++                'draft': u.text, 'draft_sha256': A.digest(u.text),
++                'output_sha256': A.digest(text),
++                'candidates': [{'text': t[0], 'sha256': A.digest(t[0]),
++                                'issues': list(t[1].issues)} for t in tries],
++            }
+     return results, stats
+ 
+ 
+@@ -598,6 +619,9 @@ docs: {USAGE_URL}""")
+     ap.add_argument("--max-copy", type=float, default=0.5, help="rewrite again above this copy rate (default %(default)s)")
+     ap.add_argument("--retries", type=int, default=1, help="extra tries for a piece with a problem (default %(default)s)")
+     ap.add_argument("--no-launch", action="store_true", help="don't start the app if it is installed but closed")
++    ap.add_argument("--academic", choices=A.PROFILES,
++                    help="conservative academic checks and audit trail; requires --json")
++    ap.add_argument("--protect-file", help="UTF-8 file of exact terms to preserve, one per line; requires --academic")
+     ap.add_argument("--version", action="version", version=f"hz {__version__}")
+     return ap
+ 
+@@ -605,6 +629,14 @@ docs: {USAGE_URL}""")
+ def run(a: argparse.Namespace, out: Out) -> int:
+     if prompt_fingerprint() != FINGERPRINT:
+         raise HzError("internal error: the prompt does not match the model's training format")
++    if a.academic and not a.json:
++        raise HzError("--academic requires --json to retain the candidate audit trail", 2)
++    if a.protect_file and not a.academic:
++        raise HzError("--protect-file requires --academic", 2)
++    protected = ()
++    if a.protect_file:
++        with open(a.protect_file, encoding='utf-8') as f:
++            protected = tuple(line.strip() for line in f if line.strip())
+     path = None if a.input in (None, "-") else a.input
+     ext = os.path.splitext(path or "")[1].lower()
+     if ext in _UNSUPPORTED:
+@@ -656,7 +688,7 @@ def run(a: argparse.Namespace, out: Out) -> int:
+         out.info(f"{len(units)} piece(s) to rewrite" + (", kept as is: " + ", ".join(
+             f"{v} {k}" for k, v in sorted(kept.items())) if kept else ""))
+         results, stats = rewrite_units(units, backend, planner.sizer, out, where, a.max_copy, a.retries,
+-                                       "paragraph" if is_docx else "line")
++                                       "paragraph" if is_docx else "line", a.academic, protected)
+     else:
+         out.warn("nothing to rewrite (only headings, code, tables or very short text); the output is the input.")
+         results, stats = {}, []
+@@ -685,6 +717,13 @@ def run(a: argparse.Namespace, out: Out) -> int:
+             "kept": dict(kept),
+             "pieces": stats,
+         }
++        if a.academic:
++            doc_out['academic'] = {'profile': a.academic,
++                                   'prompt_sha256': A.digest(build_prompt('X')),
++                                   'sampling': dict(SAMPLING),
++                                   'protected_terms': list(protected),
++                                   'review_required': True,
++                                   'restored_pieces': sum(s['academic']['restored_original'] for s in stats)}
+         if new_text is not None and not out_path:
+             doc_out["text"] = new_text
+         _write_stdout(json.dumps(doc_out, ensure_ascii=False, indent=1) + "\n")
+@@ -702,7 +741,7 @@ def run(a: argparse.Namespace, out: Out) -> int:
+                      + _describe(s["issues"], s["copy_rate"], s["missing_numbers"], s["missing_urls"], s["added_numbers"]))
+     if units:
+         out.info("read the result once: check every number, date and name.")
+-    return 0
++    return 4 if a.academic and flagged else 0
+ 
+ 
+ def main(argv: Optional[List[str]] = None) -> int:
+diff --git a/tests/test_academic.py b/tests/test_academic.py
+new file mode 100644
+index 0000000..6ddac90
+--- /dev/null
++++ b/tests/test_academic.py
+@@ -0,0 +1,88 @@
++"""Academic regression tests use a fake backend; no weights or detector API."""
++import json
++import tempfile
++import unittest
++from pathlib import Path
++
++from humanizer import academic, hz, hz_text
++from test_hz import Fake, run_hz
++
++
++class AcademicTests(unittest.TestCase):
++    def test_scientific_change_alarms(self):
++        cases = [
++            ('37 complaints', '37% complaints', 'academic_quantities'),
++            ('5 MPa at 10 mm', '5 mm at 10 MPa', 'academic_quantities'),
++            ('It may improve outcomes.', 'It improves outcomes.', 'academic_claim_cues'),
++            ('It was not significant.', 'It was significant.', 'academic_claim_cues'),
++            ('It is associated with X.', 'It causes X.', 'academic_claim_cues'),
++            ('See [12] and [12].', 'See [12].', 'academic_citations'),
++            ('Smith et al. (2020)', 'Smith et al. (2021)', 'academic_citations'),
++            (r'The term $x^2$ applies.', r'The term $x^3$ applies.', 'academic_math'),
++            ('A 2e-3 m gap', 'A 2e-2 m gap', 'academic_quantities'),
++        ]
++        for before, after, issue in cases:
++            with self.subTest(before=before):
++                self.assertIn(issue, academic.changes(before, after))
++
++    def test_protected_terms(self):
++        self.assertIn('academic_protected', academic.changes('KinemaAnchor worked.', 'Another model worked.', ['KinemaAnchor']))
++
++    def test_unchanged_and_safe_reorder(self):
++        a = 'At 28 days, the mean was 5 MPa [2]. It may help.'
++        b = 'The mean was 5 MPa [2] at 28 days. It may help.'
++        self.assertEqual([], academic.changes(a, b))
++        self.assertEqual([], academic.changes(a, a))
++
++    def test_retains_original_and_full_audit(self):
++        draft = 'The trial enrolled 37 participants and the results may suggest an association with better outcomes [12].'
++        fake = Fake(rule=lambda d, n: d.replace('37', '37%').replace('may suggest', 'prove'))
++        try:
++            code, stdout, stderr = run_hz('--server', fake.url, '--academic', 'clinical', '--json', stdin=draft.encode())
++            report = json.loads(stdout)
++            self.assertEqual(4, code)
++            self.assertEqual(draft, report['text'].strip())
++            piece = report['pieces'][0]['academic']
++            self.assertTrue(piece['restored_original'])
++            self.assertEqual(2, len(piece['candidates']))
++            self.assertEqual(academic.digest(draft), piece['output_sha256'])
++            self.assertIn('kept original', stderr)
++            for _, _, body in fake.completions():
++                self.assertEqual(hz.build_prompt(draft), body['prompt'])
++                for key, value in hz.SAMPLING.items():
++                    self.assertEqual(value, body[key])
++        finally:
++            fake.close()
++
++    def test_copying_is_allowed_in_academic_mode(self):
++        draft = 'The specimens were tested after 28 days and the average compressive strength was 5 MPa across all samples.'
++        fake = Fake(rule=lambda d, n: d)
++        try:
++            code, stdout, _ = run_hz('--server', fake.url, '--academic', 'results-in-engineering', '--json', stdin=draft.encode())
++            report = json.loads(stdout)
++            self.assertEqual(0, code)
++            self.assertEqual(1, len(fake.completions()))
++            self.assertEqual('needs_human_review', report['pieces'][0]['academic']['status'])
++            self.assertTrue(report['academic']['review_required'])
++        finally:
++            fake.close()
++
++    def test_valid_retry_beats_changed_claim(self):
++        draft = 'The specimens may show a difference after 28 days of curing under the controlled laboratory conditions described here.'
++        fake = Fake(rule=lambda d, n: d.replace('may', 'will') if n == 0 else d)
++        try:
++            code, stdout, _ = run_hz('--server', fake.url, '--academic', 'general', '--json', stdin=draft.encode())
++            report = json.loads(stdout)
++            self.assertEqual(0, code)
++            self.assertEqual(2, report['pieces'][0]['chosen'])
++            self.assertFalse(report['pieces'][0]['academic']['restored_original'])
++        finally:
++            fake.close()
++
++    def test_requires_audit_output(self):
++        code, _, _ = run_hz('--academic', 'nature', stdin=b'Example text.')
++        self.assertEqual(2, code)
++
++
++if __name__ == '__main__':
++    unittest.main()
