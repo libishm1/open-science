@@ -64,7 +64,9 @@ belongs in T2. Record this decision in the protocol.
    Save the data so the plot can be regenerated.
 5. **Extraction (T1).** One card per included source that defines a method.
    Derive equations from definitions. Do not transcribe equations from PDF
-   text without checking them.
+   text without checking them. For PDF full texts follow
+   `references/fulltext-extraction-protocol.md`; for agent or team
+   extraction follow `references/extraction-qa-protocol.md`.
 6. **Pitfall pass (T1).** Run the pitfall checklist against the paper and
    against any implementation. Resolve each flag or waive it with a reason.
 7. **Synthesis (T2).** Cluster cards by discipline and by the pipeline stage
@@ -145,3 +147,8 @@ show it.
 ## Files and failure modes
 
 - `references/failure-modes.md` - common failures and how to avoid them.
+- `references/fulltext-extraction-protocol.md` - PDF to Markdown with local
+  models: routing, subset-first engine trials, GPU sizing, text-layer faults,
+  critical equations.
+- `references/extraction-qa-protocol.md` - batches, agent rules, merge checks,
+  lead pass, dual extraction and sensitivity analysis.
